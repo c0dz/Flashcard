@@ -1,4 +1,4 @@
-package com.example.flashcard.NavBarComposables
+package com.example.flashcard.screens
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable

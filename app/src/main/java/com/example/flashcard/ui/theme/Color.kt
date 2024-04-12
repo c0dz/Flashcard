@@ -13,3 +13,5 @@ val Pink40 = Color(0xFF7D5260)
 
 val bottomTopAppBarColor = Color(0xFF1F1D28)
 val homeBackgroundColor = Color(0xFF4A465B)
+val textColorPurple = Color(0xFF928CA6)
+val buttonColorGreen = Color(0xFF49AB6C)
