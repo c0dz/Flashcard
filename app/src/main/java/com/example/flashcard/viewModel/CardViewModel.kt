@@ -85,7 +85,6 @@ class CardViewModel(
 			} catch (e: SQLiteConstraintException) {
 				println("Error inserting collection: ${e.message}")
 			}
-			//collectionDao.insertCollection(collection)
 		}
 	}
 	
@@ -98,9 +97,35 @@ class CardViewModel(
 		}
 	}
 	
-	fun insertCardToDB(card: CardEntity) {
+	fun insertCardToDB() {
 		viewModelScope.launch {
-			cardDao.insertCard(card)
+			val collectionID = collectionDao.getLastCollectionId()
+			println(collectionID)
+			val cardListEntity = cardList.map { cardData ->
+				CardEntity(
+					question = cardData.question,
+					answer = cardData.answer,
+					collectionId = collectionID
+				)
+			}
+			
+			print(cardListEntity)
+			
+			cardListEntity.forEach { cardEntity ->
+				cardDao.insertCard(cardEntity)
+			}
+			
 		}
+		
+		//clearTempData()
+	}
+	
+	fun clearTempData() {
+		this.description.value = ""
+		this.tags.value = ""
+		this.collectionName.value = ""
+		
+		cardList.clear()
+		this.nextCardId.intValue = 1
 	}
 }

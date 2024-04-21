@@ -18,4 +18,8 @@ interface CollectionDao {
 	
 	@Query("SELECT * FROM collections")
 	suspend fun getAllCollections(): List<CollectionEntity>
+	
+	// get the last inserted collection id
+	@Query("SELECT id FROM collections ORDER BY id DESC LIMIT 1")
+	suspend fun getLastCollectionId(): Int
 }

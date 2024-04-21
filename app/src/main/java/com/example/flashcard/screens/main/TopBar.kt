@@ -29,10 +29,11 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.flashcard.R
 import com.example.flashcard.Screen
 import com.example.flashcard.ui.theme.bottomTopAppBarColor
+import com.example.flashcard.viewModel.CardViewModel
 
 
 @Composable
-fun TopBarDisplay(navController: NavHostController) {
+fun TopBarDisplay(navController: NavHostController, viewModel: CardViewModel) {
 	val homeScreens = listOf(
 		Screen.CollectionsScreen,
 		Screen.ReviewScreen,
@@ -55,7 +56,7 @@ fun TopBarDisplay(navController: NavHostController) {
 	if (displayHomeBottomBar) {
 		HomeTopBar(navController)
 	} else if (displayAddCollectionBottomBar) {
-		AddCollectionTopBar(navController)
+		AddCollectionTopBar(navController, viewModel)
 	}
 }
 
@@ -88,7 +89,7 @@ fun HomeTopBar(navController: NavHostController) {
 }
 
 @Composable
-fun AddCollectionTopBar(navController: NavHostController) {
+fun AddCollectionTopBar(navController: NavHostController, viewModel: CardViewModel) {
 	val navBackStackEntry by navController.currentBackStackEntryAsState()
 	val currentScreen = navBackStackEntry?.destination?.route
 	
@@ -96,10 +97,6 @@ fun AddCollectionTopBar(navController: NavHostController) {
 		mutableIntStateOf(0)
 	}
 	
-	val addCollectionNavBar = listOf(
-		"Details",
-		"Cards"
-	)
 	Column(
 		modifier = Modifier
 			.fillMaxWidth()

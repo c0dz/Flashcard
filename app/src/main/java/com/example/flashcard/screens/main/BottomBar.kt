@@ -129,7 +129,6 @@ fun AddCollectionBottomBar(navController: NavHostController, viewModel: CardView
 				.fillMaxWidth(),
 			onClick = {
 				viewModel.insertCollectionToDB()
-				viewModel.getAllCollectionsFromDB()
 				navController.navigate(Screen.AddCardScreen.route)
 			},
 			colors = ButtonDefaults.buttonColors(
@@ -162,6 +161,7 @@ fun AddCardsBottomBar(navController: NavHostController, viewModel: CardViewModel
 			modifier = Modifier
 				.fillMaxWidth(),
 			onClick = {
+				viewModel.insertCardToDB()
 				navController.navigate(Screen.CollectionsScreen.route)
 			},
 			colors = ButtonDefaults.buttonColors(

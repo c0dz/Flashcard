@@ -16,7 +16,6 @@ import com.example.flashcard.Navigation
 import com.example.flashcard.model.dao.CardDao
 import com.example.flashcard.model.dao.CollectionDao
 import com.example.flashcard.model.database.CardDatabase
-import com.example.flashcard.model.database.CollectionDatabase
 import com.example.flashcard.ui.theme.homeBackgroundColor
 import com.example.flashcard.viewModel.CardViewModel
 
@@ -25,8 +24,10 @@ import com.example.flashcard.viewModel.CardViewModel
 fun MainScreen() {
 	val navController = rememberNavController()
 	
-	val collectionDao: CollectionDao =
-		CollectionDatabase.getInstance(navController.context).collectionDao
+	//val collectionDao: CollectionDao =
+	//	CollectionDatabase.getInstance(navController.context).collectionDao
+	val collectionDao: CollectionDao = CardDatabase
+		.getInstance(navController.context).collectionDao
 	val cardDoa: CardDao = CardDatabase.getInstance(navController.context).cardDao
 	
 	
@@ -38,7 +39,7 @@ fun MainScreen() {
 	
 	Scaffold(
 		bottomBar = { BottomBarDisplay(navController, cardViewModel) },
-		topBar = { TopBarDisplay(navController) },
+		topBar = { TopBarDisplay(navController, cardViewModel) },
 	) { paddingValue ->
 		Column(
 			modifier = Modifier
