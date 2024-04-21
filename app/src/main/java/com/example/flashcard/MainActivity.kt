@@ -11,6 +11,7 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.example.flashcard.screens.main.MainScreen
 
 class MainActivity : ComponentActivity() {
+	
 	override fun onCreate(savedInstanceState: Bundle?) {
 		
 		super.onCreate(savedInstanceState)

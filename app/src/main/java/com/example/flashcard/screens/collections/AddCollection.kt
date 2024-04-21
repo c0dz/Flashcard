@@ -9,22 +9,18 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.flashcard.ui.theme.bottomTopAppBarColor
+import com.example.flashcard.viewModel.CardViewModel
 
-@Preview
+
 @Composable
-fun AddCollection() {
+fun AddCollection(viewModel: CardViewModel) {
 	Column(
 		modifier = Modifier
 			.fillMaxSize()
@@ -33,13 +29,15 @@ fun AddCollection() {
 		verticalArrangement = Arrangement.Top,
 		horizontalAlignment = Alignment.CenterHorizontally
 	) {
-		var collectionName by remember { mutableStateOf("") }
-		var tags by remember { mutableStateOf("") }
-		var description by remember { mutableStateOf("") }
+//		var collectionName by remember { mutableStateOf("") }
+//		var tags by remember { mutableStateOf("") }
+//		var description by remember { mutableStateOf("") }
 		
 		OutlinedTextField(
-			value = collectionName,
-			onValueChange = { collectionName = it },
+			value = viewModel.getCollectionName(),
+			onValueChange = {
+				viewModel.setCollectionName(it)
+			},
 			label = {
 				Text(
 					"Collection Name",
@@ -58,8 +56,10 @@ fun AddCollection() {
 		)
 		
 		OutlinedTextField(
-			value = tags,
-			onValueChange = { tags = it },
+			value = viewModel.getTags(),
+			onValueChange = {
+				viewModel.setTags(it)
+			},
 			label = {
 				Text(
 					"Tags",
@@ -75,8 +75,10 @@ fun AddCollection() {
 		)
 		
 		OutlinedTextField(
-			value = description,
-			onValueChange = { description = it },
+			value = viewModel.getDescription(),
+			onValueChange = {
+				viewModel.setDescription(it)
+			},
 			label = {
 				Text(
 					"Description",

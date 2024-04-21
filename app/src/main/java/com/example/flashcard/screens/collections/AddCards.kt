@@ -36,11 +36,11 @@ import com.example.flashcard.ui.theme.bottomTopAppBarColor
 import com.example.flashcard.ui.theme.cardBackgroundColor
 import com.example.flashcard.ui.theme.cardLabelColor
 import com.example.flashcard.ui.theme.homeBackgroundColor
-import com.example.flashcard.viewModel.AddCardViewModel
+import com.example.flashcard.viewModel.CardViewModel
 
 @Composable
 fun AddCards(
-	viewModel: AddCardViewModel
+	viewModel: CardViewModel
 ) {
 	Column(
 		modifier = Modifier
@@ -72,7 +72,7 @@ fun AddCards(
 @Composable
 fun CardItem(
 	cardData: CardData,
-	viewModel: AddCardViewModel
+	viewModel: CardViewModel
 ) {
 	var questionValue by remember {
 		mutableStateOf(cardData.question)

@@ -29,6 +29,7 @@ import com.example.flashcard.Screen
 import com.example.flashcard.data.BottomNavigationItemData
 import com.example.flashcard.ui.theme.bottomTopAppBarColor
 import com.example.flashcard.ui.theme.buttonColorGreen
+import com.example.flashcard.viewModel.CardViewModel
 
 val bottomNavItems = listOf(
 	BottomNavigationItemData(
@@ -46,7 +47,7 @@ val bottomNavItems = listOf(
 )
 
 @Composable
-fun BottomBarDisplay(navController: NavHostController) {
+fun BottomBarDisplay(navController: NavHostController, viewModel: CardViewModel) {
 	val homeScreens = listOf(
 		Screen.CollectionsScreen,
 		Screen.ReviewScreen,
@@ -65,9 +66,9 @@ fun BottomBarDisplay(navController: NavHostController) {
 	if (displayHomeBottomBar) {
 		HomeNavigationBar(navController)
 	} else if (displayAddCollectionDetailBottomBar) {
-		AddCollectionBottomBar(navController)
+		AddCollectionBottomBar(navController, viewModel)
 	} else if (displayAddCardBottomBar) {
-		AddCardsBottomBar(navController)
+		AddCardsBottomBar(navController, viewModel)
 	}
 }
 
@@ -115,7 +116,7 @@ fun HomeNavigationBar(navController: NavHostController) {
 }
 
 @Composable
-fun AddCollectionBottomBar(navController: NavHostController) {
+fun AddCollectionBottomBar(navController: NavHostController, viewModel: CardViewModel) {
 	Row(
 		modifier = Modifier
 			.fillMaxWidth()
@@ -127,6 +128,8 @@ fun AddCollectionBottomBar(navController: NavHostController) {
 			modifier = Modifier
 				.fillMaxWidth(),
 			onClick = {
+				viewModel.insertCollectionToDB()
+				viewModel.getAllCollectionsFromDB()
 				navController.navigate(Screen.AddCardScreen.route)
 			},
 			colors = ButtonDefaults.buttonColors(
@@ -145,7 +148,9 @@ fun AddCollectionBottomBar(navController: NavHostController) {
 }
 
 @Composable
-fun AddCardsBottomBar(navController: NavHostController) {
+fun AddCardsBottomBar(navController: NavHostController, viewModel: CardViewModel) {
+	// ViewModel
+	
 	Row(
 		modifier = Modifier
 			.fillMaxWidth()
@@ -157,6 +162,7 @@ fun AddCardsBottomBar(navController: NavHostController) {
 			modifier = Modifier
 				.fillMaxWidth(),
 			onClick = {
+				navController.navigate(Screen.CollectionsScreen.route)
 			},
 			colors = ButtonDefaults.buttonColors(
 				buttonColorGreen,
