@@ -29,10 +29,11 @@ import com.example.flashcard.Screen
 import com.example.flashcard.ui.theme.bottomTopAppBarColor
 import com.example.flashcard.ui.theme.buttonColorGreen
 import com.example.flashcard.ui.theme.textColorPurple
+import com.example.flashcard.viewModel.CardViewModel
 
 
 @Composable
-fun NoCollectionsFound(navController: NavHostController) {
+fun NoCollectionsFound(navController: NavHostController, viewModel: CardViewModel) {
 	Column(
 		modifier = Modifier
 			.fillMaxSize()
@@ -73,6 +74,7 @@ fun NoCollectionsFound(navController: NavHostController) {
 		)
 		Button(
 			onClick = {
+				viewModel.clearTempData()
 				navController.navigate(Screen.AddCollectionDetailScreen.route)
 			},
 			colors = ButtonDefaults.buttonColors(

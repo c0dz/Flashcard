@@ -27,7 +27,7 @@ fun Navigation(
 		
 		composable(Screen.CollectionsScreen.route) {
 			CollectionScreen(
-				navController
+				navController, viewModel = cardViewModel
 			)
 		}
 		// Main Page

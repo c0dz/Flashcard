@@ -86,4 +86,8 @@ dependencies {
 	
 	// ktx room dependency
 	implementation(libs.androidx.room.ktx)
+	
+	// lifecycle
+	implementation(libs.androidx.lifecycle.extensions)
+	
 }

@@ -72,6 +72,8 @@ class CardViewModel(
 		cardList.find { it.id == cardId }?.answer = cardAnswer
 	}
 	
+	val collections = collectionDao.getAllCollections()
+	
 	// Database operations
 	fun insertCollectionToDB() {
 		val collection = CollectionEntity(
@@ -88,19 +90,9 @@ class CardViewModel(
 		}
 	}
 	
-	fun getAllCollectionsFromDB() {
-		viewModelScope.launch {
-			val collections = collectionDao.getAllCollections()
-			collections.forEach { collection ->
-				println("Collection Name: ${collection.name}")
-			}
-		}
-	}
-	
 	fun insertCardToDB() {
 		viewModelScope.launch {
 			val collectionID = collectionDao.getLastCollectionId()
-			println(collectionID)
 			val cardListEntity = cardList.map { cardData ->
 				CardEntity(
 					question = cardData.question,
@@ -109,15 +101,11 @@ class CardViewModel(
 				)
 			}
 			
-			print(cardListEntity)
-			
 			cardListEntity.forEach { cardEntity ->
 				cardDao.insertCard(cardEntity)
 			}
 			
 		}
-		
-		//clearTempData()
 	}
 	
 	fun clearTempData() {

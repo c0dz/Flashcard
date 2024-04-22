@@ -6,6 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.flashcard.model.entities.CollectionEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface CollectionDao {
@@ -17,7 +18,7 @@ interface CollectionDao {
 	suspend fun deleteCollection(card: CollectionEntity)
 	
 	@Query("SELECT * FROM collections")
-	suspend fun getAllCollections(): List<CollectionEntity>
+	fun getAllCollections(): Flow<List<CollectionEntity>>
 	
 	// get the last inserted collection id
 	@Query("SELECT id FROM collections ORDER BY id DESC LIMIT 1")

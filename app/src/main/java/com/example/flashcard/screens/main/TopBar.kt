@@ -54,14 +54,14 @@ fun TopBarDisplay(navController: NavHostController, viewModel: CardViewModel) {
 		addCollectionScreens.any { it.route == currentDestination?.route }
 	
 	if (displayHomeBottomBar) {
-		HomeTopBar(navController)
+		HomeTopBar(navController, viewModel)
 	} else if (displayAddCollectionBottomBar) {
 		AddCollectionTopBar(navController, viewModel)
 	}
 }
 
 @Composable
-fun HomeTopBar(navController: NavHostController) {
+fun HomeTopBar(navController: NavHostController, viewModel: CardViewModel) {
 	Row(
 		modifier = Modifier
 			.fillMaxWidth()
@@ -82,9 +82,11 @@ fun HomeTopBar(navController: NavHostController) {
 		Image(
 			painter = painterResource(R.drawable.add_collection_icon),
 			contentDescription = "add_collection",
-			modifier = Modifier.clickable { }
+			modifier = Modifier.clickable {
+				viewModel.clearTempData()
+				navController.navigate(Screen.AddCollectionDetailScreen.route)
+			}
 		)
-		
 	}
 }
 
