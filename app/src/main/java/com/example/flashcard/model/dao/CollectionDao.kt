@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.Flow
 interface CollectionDao {
 	
 	@Insert(onConflict = OnConflictStrategy.IGNORE)
-	suspend fun insertCollection(card: CollectionEntity)
+	suspend fun insertCollection(card: CollectionEntity): Long
 	
 	@Delete
 	suspend fun deleteCollection(card: CollectionEntity)

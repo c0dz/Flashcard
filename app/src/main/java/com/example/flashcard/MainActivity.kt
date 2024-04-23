@@ -19,7 +19,10 @@ class MainActivity : ComponentActivity() {
 		enableEdgeToEdge() // TODO: edge to edge not working
 		setContent {
 			
-			Box(Modifier.safeDrawingPadding()) {
+			Box(
+				Modifier
+					.safeDrawingPadding()
+			) {
 				MainScreen()
 			}
 		}

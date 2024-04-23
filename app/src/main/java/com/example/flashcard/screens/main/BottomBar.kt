@@ -62,6 +62,9 @@ fun BottomBarDisplay(navController: NavHostController, viewModel: CardViewModel)
 	val displayAddCollectionDetailBottomBar =
 		Screen.AddCollectionDetailScreen.route == currentDestination?.route
 	val displayAddCardBottomBar = Screen.AddCardScreen.route == currentDestination?.route
+	val displayStudyQuestionBottomBar =
+		Screen.StudyQuestionScreen.route == currentDestination?.route
+	val displayStudyAnswerBottomBar = Screen.StudyAnswerScreen.route == currentDestination?.route
 	
 	if (displayHomeBottomBar) {
 		HomeNavigationBar(navController)
@@ -69,6 +72,10 @@ fun BottomBarDisplay(navController: NavHostController, viewModel: CardViewModel)
 		AddCollectionBottomBar(navController, viewModel)
 	} else if (displayAddCardBottomBar) {
 		AddCardsBottomBar(navController, viewModel)
+	} else if (displayStudyQuestionBottomBar) {
+		StudyQuestionBottomBar(navController, viewModel)
+	} else if (displayStudyAnswerBottomBar) {
+		StudyAnswerBottomBar(navController, viewModel)
 	}
 }
 
@@ -148,8 +155,6 @@ fun AddCollectionBottomBar(navController: NavHostController, viewModel: CardView
 
 @Composable
 fun AddCardsBottomBar(navController: NavHostController, viewModel: CardViewModel) {
-	// ViewModel
-	
 	Row(
 		modifier = Modifier
 			.fillMaxWidth()
@@ -172,6 +177,67 @@ fun AddCardsBottomBar(navController: NavHostController, viewModel: CardViewModel
 		) {
 			Text(
 				text = "Save Collection",
+				textAlign = TextAlign.Center,
+				color = Color.White
+			)
+		}
+	}
+}
+
+@Composable
+fun StudyQuestionBottomBar(navController: NavHostController, viewModel: CardViewModel) {
+	Row(
+		modifier = Modifier
+			.fillMaxWidth()
+			.background(bottomTopAppBarColor),
+		verticalAlignment = Alignment.CenterVertically,
+		horizontalArrangement = Arrangement.Center
+	) {
+		Button(
+			modifier = Modifier
+				.fillMaxWidth(),
+			onClick = {
+			},
+			colors = ButtonDefaults.buttonColors(
+				buttonColorGreen,
+				contentColor = Color.White
+			),
+			shape = RoundedCornerShape(20)
+		) {
+			Text(
+				text = "See Answer",
+				textAlign = TextAlign.Center,
+				color = Color.White
+			)
+		}
+	}
+}
+
+@Composable
+fun StudyAnswerBottomBar(
+	navController: NavHostController,
+	viewModel: CardViewModel
+) {
+	Row(
+		modifier = Modifier
+			.fillMaxWidth()
+			.background(bottomTopAppBarColor),
+		verticalAlignment = Alignment.CenterVertically,
+		horizontalArrangement = Arrangement.Center
+	) {
+		Button(
+			modifier = Modifier
+				.fillMaxWidth(),
+			onClick = {
+			},
+			colors = ButtonDefaults.buttonColors(
+				buttonColorGreen,
+				contentColor = Color.White
+			),
+			shape = RoundedCornerShape(20)
+		) {
+			Text(
+				text = "See Question",
 				textAlign = TextAlign.Center,
 				color = Color.White
 			)

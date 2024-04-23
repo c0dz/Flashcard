@@ -9,13 +9,17 @@ import com.example.flashcard.screens.ProgressScreen
 import com.example.flashcard.screens.ReviewScreen
 import com.example.flashcard.screens.collections.AddCards
 import com.example.flashcard.screens.collections.AddCollection
+import com.example.flashcard.screens.study.StudyAnswerScreen
+import com.example.flashcard.screens.study.StudyQuestionScreen
 import com.example.flashcard.viewModel.CardViewModel
+import com.example.flashcard.viewModel.StudyViewModel
 
 
 @Composable
 fun Navigation(
 	navController: NavHostController,
-	cardViewModel: CardViewModel
+	cardViewModel: CardViewModel,
+	studyViewModel: StudyViewModel
 ) {
 	
 	
@@ -27,7 +31,7 @@ fun Navigation(
 		
 		composable(Screen.CollectionsScreen.route) {
 			CollectionScreen(
-				navController, viewModel = cardViewModel
+				navController, cardViewModel = cardViewModel, studyViewModel = studyViewModel
 			)
 		}
 		// Main Page
@@ -39,6 +43,18 @@ fun Navigation(
 		
 		composable(Screen.AddCollectionDetailScreen.route) { AddCollection(viewModel = cardViewModel) }
 		composable(Screen.AddCardScreen.route) { AddCards(viewModel = cardViewModel) }
+		
+		//////////////
+		// Study
+		
+		composable(Screen.StudyQuestionScreen.route) {
+			StudyQuestionScreen()
+		}
+		composable(
+			Screen.StudyAnswerScreen.route,
+		) {
+			StudyAnswerScreen()
+		}
 	}
 }
 

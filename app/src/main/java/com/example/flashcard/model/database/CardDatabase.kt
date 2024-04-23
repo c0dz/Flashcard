@@ -12,12 +12,12 @@ import com.example.flashcard.model.entities.CollectionEntity
 
 @Database(
 	entities = [CardEntity::class, CollectionEntity::class],
-	version = 4,
+	version = 6,
 	autoMigrations = [
 		AutoMigration(
-			from = 3,
-			to = 4,
-			//spec = CardDatabaseMigration3To4::class
+			from = 5,
+			to = 6,
+			//spec = CardDatabaseMigration5To6::class
 		)
 	],
 	exportSchema = true,

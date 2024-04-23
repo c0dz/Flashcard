@@ -18,6 +18,7 @@ import com.example.flashcard.model.dao.CollectionDao
 import com.example.flashcard.model.database.CardDatabase
 import com.example.flashcard.ui.theme.homeBackgroundColor
 import com.example.flashcard.viewModel.CardViewModel
+import com.example.flashcard.viewModel.StudyViewModel
 
 @Preview
 @Composable
@@ -37,6 +38,13 @@ fun MainScreen() {
 		}
 	})
 	
+	// multiple viewModels
+	val studyViewModel: StudyViewModel = viewModel(factory = object : ViewModelProvider.Factory {
+		override fun <T : ViewModel> create(modelClass: Class<T>): T {
+			return StudyViewModel(cardDoa, collectionDao) as T
+		}
+	})
+	
 	Scaffold(
 		bottomBar = { BottomBarDisplay(navController, cardViewModel) },
 		topBar = { TopBarDisplay(navController, cardViewModel) },
@@ -47,7 +55,7 @@ fun MainScreen() {
 				.padding(paddingValue)
 				.background(homeBackgroundColor)
 		) {
-			Navigation(navController, cardViewModel)
+			Navigation(navController, cardViewModel, studyViewModel)
 		}
 	}
 }

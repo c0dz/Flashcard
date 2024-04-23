@@ -20,9 +20,9 @@ import androidx.room.PrimaryKey
 )
 data class CardEntity(
 	@PrimaryKey(autoGenerate = true)
-	val id: Int = 0,
+	val id: Long = 0,
 	var question: String = "",
 	var answer: String = "",
 	@ColumnInfo(name = "collection_id", index = true)
-	var collectionId: Int
+	var collectionId: Long
 )

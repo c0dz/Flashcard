@@ -16,6 +16,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -45,18 +46,27 @@ fun TopBarDisplay(navController: NavHostController, viewModel: CardViewModel) {
 		Screen.AddCollectionDetailScreen
 	)
 	
+	val studyScreens = listOf(
+		Screen.StudyQuestionScreen,
+		Screen.StudyAnswerScreen
+	)
+	
 	val navBackStackEntry by navController.currentBackStackEntryAsState()
 	val currentDestination = navBackStackEntry?.destination
 	
 	//Check for the current route and choose the Top Bar
-	val displayHomeBottomBar = homeScreens.any { it.route == currentDestination?.route }
-	val displayAddCollectionBottomBar =
+	val displayHomeTopBar = homeScreens.any { it.route == currentDestination?.route }
+	val displayAddCollectionTopBar =
 		addCollectionScreens.any { it.route == currentDestination?.route }
+	val displayStudyTopBar = studyScreens.any { it.route == currentDestination?.route }
 	
-	if (displayHomeBottomBar) {
+	if (displayHomeTopBar) {
 		HomeTopBar(navController, viewModel)
-	} else if (displayAddCollectionBottomBar) {
-		AddCollectionTopBar(navController, viewModel)
+	} else if (displayAddCollectionTopBar) {
+		AddCollectionTopBar(navController)
+	} else if (displayStudyTopBar) {
+		StudyTopBar(navController, viewModel)
+		
 	}
 }
 
@@ -91,7 +101,7 @@ fun HomeTopBar(navController: NavHostController, viewModel: CardViewModel) {
 }
 
 @Composable
-fun AddCollectionTopBar(navController: NavHostController, viewModel: CardViewModel) {
+fun AddCollectionTopBar(navController: NavHostController) {
 	val navBackStackEntry by navController.currentBackStackEntryAsState()
 	val currentScreen = navBackStackEntry?.destination?.route
 	
@@ -140,9 +150,6 @@ fun AddCollectionTopBar(navController: NavHostController, viewModel: CardViewMod
 			Text(
 				text = "Details",
 				modifier = Modifier
-					.clickable {
-						navController.navigate(Screen.AddCollectionDetailScreen.route)
-					}
 					.padding(horizontal = 10.dp, vertical = 5.dp),
 				fontWeight = if (currentScreen == Screen.AddCollectionDetailScreen.route) FontWeight.Bold else FontWeight.Normal,
 				fontSize = if (currentScreen == Screen.AddCollectionDetailScreen.route) 15.sp else 11.sp,
@@ -152,14 +159,29 @@ fun AddCollectionTopBar(navController: NavHostController, viewModel: CardViewMod
 			Text(
 				text = "Cards",
 				modifier = Modifier
-					.clickable {
-						navController.navigate(Screen.AddCardScreen.route)
-					}
 					.padding(horizontal = 10.dp, vertical = 5.dp),
 				fontWeight = if (currentScreen == Screen.AddCardScreen.route) FontWeight.Bold else FontWeight.Normal,
 				fontSize = if (currentScreen == Screen.AddCardScreen.route) 15.sp else 11.sp,
 				color = Color.White
 			)
 		}
+	}
+}
+
+@Composable
+fun StudyTopBar(navController: NavHostController, viewModel: CardViewModel) {
+	Row(
+		modifier = Modifier
+			.fillMaxWidth()
+			.background(color = bottomTopAppBarColor)
+			.padding(16.dp),
+		horizontalArrangement = Arrangement.Start,
+		verticalAlignment = Alignment.CenterVertically
+	) {
+		Image(painter = painterResource(R.drawable.close_icon),
+			contentDescription = "close",
+			modifier = Modifier.clickable {
+				navController.navigate(Screen.CollectionsScreen.route)
+			})
 	}
 }

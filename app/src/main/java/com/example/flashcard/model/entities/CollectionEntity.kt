@@ -9,7 +9,7 @@ import androidx.room.PrimaryKey
 )
 data class CollectionEntity(
 	@PrimaryKey(autoGenerate = true)
-	val id: Int = 0,
+	val id: Long = 0,
 	@ColumnInfo(name = "collection_name")
 	var name: String = "",
 	var tags: String = "",

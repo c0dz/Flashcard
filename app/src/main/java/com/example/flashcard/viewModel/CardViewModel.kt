@@ -2,6 +2,7 @@ package com.example.flashcard.viewModel
 
 import android.database.sqlite.SQLiteConstraintException
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -75,6 +76,8 @@ class CardViewModel(
 	val collections = collectionDao.getAllCollections()
 	
 	// Database operations
+	private var createdCollectionID = mutableLongStateOf(0)
+	
 	fun insertCollectionToDB() {
 		val collection = CollectionEntity(
 			name = collectionName.value,
@@ -83,7 +86,7 @@ class CardViewModel(
 		)
 		viewModelScope.launch {
 			try {
-				collectionDao.insertCollection(collection)
+				createdCollectionID.longValue = collectionDao.insertCollection(collection)
 			} catch (e: SQLiteConstraintException) {
 				println("Error inserting collection: ${e.message}")
 			}
@@ -92,12 +95,11 @@ class CardViewModel(
 	
 	fun insertCardToDB() {
 		viewModelScope.launch {
-			val collectionID = collectionDao.getLastCollectionId()
 			val cardListEntity = cardList.map { cardData ->
 				CardEntity(
 					question = cardData.question,
 					answer = cardData.answer,
-					collectionId = collectionID
+					collectionId = createdCollectionID.longValue
 				)
 			}
 			
@@ -107,6 +109,7 @@ class CardViewModel(
 			
 		}
 	}
+	
 	
 	fun clearTempData() {
 		this.description.value = ""
