@@ -45,12 +45,12 @@ fun TopBarDisplay(navController: NavHostController, viewModel: CardViewModel) {
 		Screen.AddCardScreen,
 		Screen.AddCollectionDetailScreen
 	)
-	
-	val studyScreens = listOf(
-		Screen.StudyQuestionScreen,
-		Screen.StudyAnswerScreen
-	)
-	
+
+//	val studyScreens = listOf(
+//		Screen.StudyQuestionScreen,
+//		Screen.StudyAnswerScreen
+//	)
+//
 	val navBackStackEntry by navController.currentBackStackEntryAsState()
 	val currentDestination = navBackStackEntry?.destination
 	
@@ -58,15 +58,15 @@ fun TopBarDisplay(navController: NavHostController, viewModel: CardViewModel) {
 	val displayHomeTopBar = homeScreens.any { it.route == currentDestination?.route }
 	val displayAddCollectionTopBar =
 		addCollectionScreens.any { it.route == currentDestination?.route }
-	val displayStudyTopBar = studyScreens.any { it.route == currentDestination?.route }
+	//val displayStudyTopBar = studyScreens.any { it.route == currentDestination?.route }
+	val displayCardTopBar = Screen.CardScreen.route == currentDestination?.route
 	
 	if (displayHomeTopBar) {
 		HomeTopBar(navController, viewModel)
 	} else if (displayAddCollectionTopBar) {
 		AddCollectionTopBar(navController)
-	} else if (displayStudyTopBar) {
+	} else if (displayCardTopBar) {
 		StudyTopBar(navController, viewModel)
-		
 	}
 }
 

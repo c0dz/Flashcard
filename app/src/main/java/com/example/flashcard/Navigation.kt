@@ -9,8 +9,7 @@ import com.example.flashcard.screens.ProgressScreen
 import com.example.flashcard.screens.ReviewScreen
 import com.example.flashcard.screens.collections.AddCards
 import com.example.flashcard.screens.collections.AddCollection
-import com.example.flashcard.screens.study.StudyAnswerScreen
-import com.example.flashcard.screens.study.StudyQuestionScreen
+import com.example.flashcard.screens.study.CardScreen
 import com.example.flashcard.viewModel.CardViewModel
 import com.example.flashcard.viewModel.StudyViewModel
 
@@ -47,14 +46,14 @@ fun Navigation(
 		//////////////
 		// Study
 		
-		composable(Screen.StudyQuestionScreen.route) {
-			StudyQuestionScreen()
+		composable(Screen.CardScreen.route) {
+			CardScreen(viewModel = studyViewModel)
 		}
-		composable(
-			Screen.StudyAnswerScreen.route,
-		) {
-			StudyAnswerScreen()
-		}
+//		composable(
+//			Screen.StudyAnswerScreen.route,
+//		) {
+//			StudyAnswerScreen()
+//		}
 	}
 }
 

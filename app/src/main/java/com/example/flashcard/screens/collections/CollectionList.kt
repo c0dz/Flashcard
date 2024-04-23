@@ -19,6 +19,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.example.flashcard.Screen
 import com.example.flashcard.model.entities.CollectionEntity
 import com.example.flashcard.ui.theme.bottomTopAppBarColor
 import com.example.flashcard.ui.theme.homeBackgroundColor
@@ -70,7 +71,8 @@ fun CollectionComponent(
 			.border(5.dp, homeCardBorderColor, shape = RoundedCornerShape(15.dp))
 			.background(homeBackgroundColor)
 			.clickable {
-			
+				viewModel.setStudyCollection(id)
+				navController.navigate(Screen.CardScreen.route)
 			},
 		verticalArrangement = Arrangement.Center,
 		horizontalAlignment = Alignment.Start,

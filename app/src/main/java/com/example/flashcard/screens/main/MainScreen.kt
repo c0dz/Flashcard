@@ -25,8 +25,7 @@ import com.example.flashcard.viewModel.StudyViewModel
 fun MainScreen() {
 	val navController = rememberNavController()
 	
-	//val collectionDao: CollectionDao =
-	//	CollectionDatabase.getInstance(navController.context).collectionDao
+	
 	val collectionDao: CollectionDao = CardDatabase
 		.getInstance(navController.context).collectionDao
 	val cardDoa: CardDao = CardDatabase.getInstance(navController.context).cardDao
@@ -38,7 +37,6 @@ fun MainScreen() {
 		}
 	})
 	
-	// multiple viewModels
 	val studyViewModel: StudyViewModel = viewModel(factory = object : ViewModelProvider.Factory {
 		override fun <T : ViewModel> create(modelClass: Class<T>): T {
 			return StudyViewModel(cardDoa, collectionDao) as T
@@ -52,8 +50,10 @@ fun MainScreen() {
 		Column(
 			modifier = Modifier
 				.fillMaxSize()
-				.padding(paddingValue)
 				.background(homeBackgroundColor)
+				.padding(
+					paddingValue,
+				)
 		) {
 			Navigation(navController, cardViewModel, studyViewModel)
 		}

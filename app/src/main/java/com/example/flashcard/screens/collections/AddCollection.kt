@@ -29,9 +29,6 @@ fun AddCollection(viewModel: CardViewModel) {
 		verticalArrangement = Arrangement.Top,
 		horizontalAlignment = Alignment.CenterHorizontally
 	) {
-//		var collectionName by remember { mutableStateOf("") }
-//		var tags by remember { mutableStateOf("") }
-//		var description by remember { mutableStateOf("") }
 		
 		OutlinedTextField(
 			value = viewModel.getCollectionName(),
