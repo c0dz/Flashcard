@@ -1,6 +1,7 @@
 package com.example.flashcard.viewModel
 
 import android.database.sqlite.SQLiteConstraintException
+import android.util.Log
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateListOf
@@ -88,7 +89,7 @@ class CardViewModel(
 			try {
 				createdCollectionID.longValue = collectionDao.insertCollection(collection)
 			} catch (e: SQLiteConstraintException) {
-				println("Error inserting collection: ${e.message}")
+				Log.e("CardViewModel", "Error inserting collection: ${e.message}")
 			}
 		}
 	}
@@ -99,12 +100,14 @@ class CardViewModel(
 				CardEntity(
 					question = cardData.question,
 					answer = cardData.answer,
-					collectionId = createdCollectionID.longValue
+					collectionId = createdCollectionID.longValue,
+					lastReviewDate = System.currentTimeMillis(),
+					dueDate = calculateDueDate(1)
 				)
 			}
 			
 			cardListEntity.forEach { cardEntity ->
-				cardDao.insertCard(cardEntity)
+				cardDao.upsertCard(cardEntity)
 			}
 			
 		}
@@ -118,5 +121,18 @@ class CardViewModel(
 		
 		cardList.clear()
 		this.nextCardId.intValue = 1
+	}
+	
+	
+	fun calculateDueDate(boxNumber: Int, lastReviewDate: Long = System.currentTimeMillis()): Long {
+		val intervalInDays = when (boxNumber) {
+			1 -> 1
+			2 -> 3
+			3 -> 7
+			4 -> 14
+			5 -> 30
+			else -> 1
+		}
+		return lastReviewDate + intervalInDays * 24 * 60 * 60 * 1000
 	}
 }

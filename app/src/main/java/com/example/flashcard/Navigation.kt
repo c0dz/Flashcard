@@ -1,6 +1,16 @@
 package com.example.flashcard
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.MutableTransitionState
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -20,15 +30,27 @@ fun Navigation(
 	cardViewModel: CardViewModel,
 	studyViewModel: StudyViewModel
 ) {
-	
-	
 	NavHost(
 		navController = navController,
 		route = Graph.HOME,
 		startDestination = Screen.CollectionsScreen.route
 	) {
 		
-		composable(Screen.CollectionsScreen.route) {
+		composable(
+			Screen.CollectionsScreen.route,
+//			enterTransition = {
+//				slideIntoContainer(
+//					AnimatedContentTransitionScope.SlideDirection.Left,
+//					animationSpec = tween(100)
+//				)
+//			},
+//			exitTransition = {
+//				slideOutOfContainer(
+//					AnimatedContentTransitionScope.SlideDirection.Left,
+//					animationSpec = tween(100)
+//				)
+//			},
+		) {
 			CollectionScreen(
 				navController, cardViewModel = cardViewModel, studyViewModel = studyViewModel
 			)
@@ -40,14 +62,19 @@ fun Navigation(
 		//////////////
 		// Add Collection
 		
-		composable(Screen.AddCollectionDetailScreen.route) { AddCollection(viewModel = cardViewModel) }
+		composable(Screen.AddCollectionDetailScreen.route) {
+			EnterAnimation { AddCollection(viewModel = cardViewModel) }
+		}
 		composable(Screen.AddCardScreen.route) { AddCards(viewModel = cardViewModel) }
 		
 		//////////////
 		// Study
 		
 		composable(Screen.CardScreen.route) {
-			CardScreen(viewModel = studyViewModel)
+			CardScreen(
+				viewModel = studyViewModel,
+				navController = navController
+			)
 		}
 //		composable(
 //			Screen.StudyAnswerScreen.route,
@@ -59,4 +86,22 @@ fun Navigation(
 
 object Graph {
 	const val HOME = "home_graph"
+}
+
+@Composable
+fun EnterAnimation(content: @Composable () -> Unit) {
+	AnimatedVisibility(
+		visibleState = MutableTransitionState(
+			initialState = false
+		).apply { targetState = true },
+		modifier = Modifier,
+		enter = slideInVertically(
+			initialOffsetY = { -40 }
+		) + expandVertically(
+			expandFrom = Alignment.Top
+		) + fadeIn(initialAlpha = 0.3f),
+		exit = slideOutVertically() + shrinkVertically() + fadeOut(),
+	) {
+		content()
+	}
 }

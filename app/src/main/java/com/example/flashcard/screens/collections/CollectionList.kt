@@ -32,7 +32,6 @@ fun CollectionList(
 	navController: NavHostController,
 	studyViewModel: StudyViewModel
 ) {
-	println("CollectionList: $collections")
 	LazyColumn(
 		modifier = Modifier
 			.fillMaxSize()

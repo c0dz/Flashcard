@@ -24,5 +24,23 @@ data class CardEntity(
 	var question: String = "",
 	var answer: String = "",
 	@ColumnInfo(name = "collection_id", index = true)
-	var collectionId: Long
+	var collectionId: Long,
+	@ColumnInfo(name = "box_number", defaultValue = "1")
+	var boxNumber: Int = 1,
+	@ColumnInfo(name = "last_review_date")
+	var lastReviewDate: Long?,
+	@ColumnInfo(name = "due_date")
+	var dueDate: Long?
 )
+
+fun calculateDueDate(boxNumber: Int, lastReviewDate: Long = System.currentTimeMillis()): Long {
+	val intervalInDays = when (boxNumber) {
+		1 -> 1
+		2 -> 3
+		3 -> 7
+		4 -> 14
+		5 -> 30
+		else -> 1
+	}
+	return lastReviewDate + intervalInDays * 24 * 60 * 60 * 1000
+}
