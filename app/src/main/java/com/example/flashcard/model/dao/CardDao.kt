@@ -17,4 +17,10 @@ interface CardDao {
 	
 	@Query("SELECT * FROM cards WHERE collection_id = :collectionId")
 	suspend fun getAllCards(collectionId: Long): List<CardEntity>
+	
+	@Query("SELECT * FROM cards WHERE due_date < :currentDate and collection_id = :collectionId")
+	suspend fun getDueCards(
+		collectionId: Long,
+		currentDate: Long = System.currentTimeMillis()
+	): List<CardEntity>
 }

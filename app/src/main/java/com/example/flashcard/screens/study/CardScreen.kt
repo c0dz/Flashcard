@@ -170,21 +170,20 @@ private fun MarkCard(
 		Column(
 			modifier = Modifier
 				.clickable {
+					Log.d("CardScreen", "time: ${cardsList.value.first().dueDate}")
+					Log.d("CardScreen", "time: ${cardsList.value.first().lastReviewDate}")
+					
 					viewModel.moveToNextBox(
 						card = cardsList.value.first()
 					)
 					if (cardsList.value.size == 1) {
 						navController.navigate(Screen.CollectionsScreen.route)
-						Log.d("CardScreen", "Navigated to Collection Screen")
 					}
 					viewModel.removeCurrentCardFromList(
 						cardsList,
 						updateCardState,
 						CardState.Question
 					)
-					Log.d("CardScreen", "CardsList: $cardsList")
-					Log.d("CardScreen", "Card Removed From the List")
-					
 				},
 			verticalArrangement = Arrangement.Center,
 			horizontalAlignment = Alignment.CenterHorizontally
@@ -204,6 +203,20 @@ private fun MarkCard(
 		
 		// Hard
 		Column(
+			modifier = Modifier
+				.clickable {
+					viewModel.moveToFirstBox(
+						card = cardsList.value.first()
+					)
+					if (cardsList.value.size == 1) {
+						navController.navigate(Screen.CollectionsScreen.route)
+					}
+					viewModel.removeCurrentCardFromList(
+						cardsList,
+						updateCardState,
+						CardState.Question
+					)
+				},
 			verticalArrangement = Arrangement.Center,
 			horizontalAlignment = Alignment.CenterHorizontally
 		) {

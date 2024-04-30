@@ -13,6 +13,7 @@ import com.example.flashcard.model.dao.CardDao
 import com.example.flashcard.model.dao.CollectionDao
 import com.example.flashcard.model.entities.CardEntity
 import com.example.flashcard.model.entities.CollectionEntity
+import com.example.flashcard.model.entities.calculateDueDate
 import kotlinx.coroutines.launch
 
 class CardViewModel(
@@ -96,13 +97,16 @@ class CardViewModel(
 	
 	fun insertCardToDB() {
 		viewModelScope.launch {
+			val lastReviewDateDefault = System.currentTimeMillis()
+			val dueDateDefault = calculateDueDate(0, lastReviewDateDefault)
+			
 			val cardListEntity = cardList.map { cardData ->
 				CardEntity(
 					question = cardData.question,
 					answer = cardData.answer,
 					collectionId = createdCollectionID.longValue,
-					lastReviewDate = System.currentTimeMillis(),
-					dueDate = calculateDueDate(1)
+					lastReviewDate = lastReviewDateDefault,
+					dueDate = dueDateDefault
 				)
 			}
 			
@@ -121,18 +125,5 @@ class CardViewModel(
 		
 		cardList.clear()
 		this.nextCardId.intValue = 1
-	}
-	
-	
-	fun calculateDueDate(boxNumber: Int, lastReviewDate: Long = System.currentTimeMillis()): Long {
-		val intervalInDays = when (boxNumber) {
-			1 -> 1
-			2 -> 3
-			3 -> 7
-			4 -> 14
-			5 -> 30
-			else -> 1
-		}
-		return lastReviewDate + intervalInDays * 24 * 60 * 60 * 1000
 	}
 }

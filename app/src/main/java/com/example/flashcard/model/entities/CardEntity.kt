@@ -1,5 +1,6 @@
 package com.example.flashcard.model.entities
 
+import android.util.Log
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
@@ -26,7 +27,7 @@ data class CardEntity(
 	@ColumnInfo(name = "collection_id", index = true)
 	var collectionId: Long,
 	@ColumnInfo(name = "box_number", defaultValue = "1")
-	var boxNumber: Int = 1,
+	var boxNumber: Int = 0,
 	@ColumnInfo(name = "last_review_date")
 	var lastReviewDate: Long?,
 	@ColumnInfo(name = "due_date")
@@ -35,12 +36,17 @@ data class CardEntity(
 
 fun calculateDueDate(boxNumber: Int, lastReviewDate: Long = System.currentTimeMillis()): Long {
 	val intervalInDays = when (boxNumber) {
+		0 -> 0
 		1 -> 1
 		2 -> 3
 		3 -> 7
 		4 -> 14
 		5 -> 30
-		else -> 1
+		6 -> 45
+		7 -> 60
+		else -> 90
 	}
+	Log.d("Card", "Interval: $intervalInDays")
+	
 	return lastReviewDate + intervalInDays * 24 * 60 * 60 * 1000
 }

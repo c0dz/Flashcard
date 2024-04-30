@@ -22,7 +22,8 @@ class StudyViewModel(
 		viewModelScope.launch {
 			Log.d("StudyViewModel", "setStudyCollection: $collectionId")
 			Log.d("StudyViewModel", "STARTED SETTING STUDY COLLECTION")
-			cards = cardDao.getAllCards(collectionId)
+			cards = cardDao.getDueCards(collectionId)
+			Log.d("StudyViewModel", "Time: ${System.currentTimeMillis()}")
 			Log.d("StudyViewModel", "FINISHED SETTING STUDY COLLECTION")
 			
 			// check if the cards list is empty
@@ -47,6 +48,8 @@ class StudyViewModel(
 		card: CardEntity
 	) {
 		val lastReviewDate = System.currentTimeMillis()
+		val dueDate = calculateDueDate(card.boxNumber + 1, lastReviewDate)
+		Log.d("CardScreen", "Due Date: $dueDate")
 		
 		val updatedCard = CardEntity(
 			id = card.id,
@@ -55,7 +58,29 @@ class StudyViewModel(
 			collectionId = card.collectionId,
 			boxNumber = card.boxNumber + 1,
 			lastReviewDate = lastReviewDate,
-			dueDate = calculateDueDate(card.boxNumber + 1, lastReviewDate)
+			dueDate = dueDate
+		)
+		
+		viewModelScope.launch {
+			cardDao.upsertCard(updatedCard)
+		}
+	}
+	
+	fun moveToFirstBox(
+		card: CardEntity
+	) {
+		val lastReviewDate = System.currentTimeMillis()
+		val dueDate = calculateDueDate(1, lastReviewDate)
+		Log.d("CardScreen", "Due Date: $dueDate")
+		
+		val updatedCard = CardEntity(
+			id = card.id,
+			question = card.question,
+			answer = card.answer,
+			collectionId = card.collectionId,
+			boxNumber = 1,
+			lastReviewDate = lastReviewDate,
+			dueDate = dueDate
 		)
 		
 		viewModelScope.launch {
