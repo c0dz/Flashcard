@@ -68,6 +68,7 @@ fun BottomBarDisplay(navController: NavHostController, viewModel: CardViewModel)
 	val displayCardBottomBar =
 		Screen.CardScreen.route == currentDestination?.route
 	//val displayStudyAnswerBottomBar = Screen.StudyAnswerScreen.route == currentDestination?.route
+	val displaySettingsBottomBar = Screen.SettingsScreen.route == currentDestination?.route
 	
 	if (displayHomeBottomBar) {
 		HomeNavigationBar(navController)
@@ -77,7 +78,8 @@ fun BottomBarDisplay(navController: NavHostController, viewModel: CardViewModel)
 		AddCardsBottomBar(navController, viewModel)
 	} else if (displayCardBottomBar) {
 		Spacer(modifier = Modifier.height(0.dp))
-		//StudyQuestionBottomBar(navController, viewModel)
+	} else if (displaySettingsBottomBar) {
+		Spacer(modifier = Modifier.height(0.dp))
 	}
 }
 

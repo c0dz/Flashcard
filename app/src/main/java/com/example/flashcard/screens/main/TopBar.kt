@@ -45,12 +45,8 @@ fun TopBarDisplay(navController: NavHostController, viewModel: CardViewModel) {
 		Screen.AddCardScreen,
 		Screen.AddCollectionDetailScreen
 	)
-
-//	val studyScreens = listOf(
-//		Screen.StudyQuestionScreen,
-//		Screen.StudyAnswerScreen
-//	)
-//
+	
+	
 	val navBackStackEntry by navController.currentBackStackEntryAsState()
 	val currentDestination = navBackStackEntry?.destination
 	
@@ -60,6 +56,8 @@ fun TopBarDisplay(navController: NavHostController, viewModel: CardViewModel) {
 		addCollectionScreens.any { it.route == currentDestination?.route }
 	//val displayStudyTopBar = studyScreens.any { it.route == currentDestination?.route }
 	val displayCardTopBar = Screen.CardScreen.route == currentDestination?.route
+	val displaySettingsTopBar = Screen.SettingsScreen.route == currentDestination?.route
+	val displayProgressTopBar = Screen.ProgressScreen.route == currentDestination?.route
 	
 	if (displayHomeTopBar) {
 		HomeTopBar(navController, viewModel)
@@ -67,6 +65,10 @@ fun TopBarDisplay(navController: NavHostController, viewModel: CardViewModel) {
 		AddCollectionTopBar(navController)
 	} else if (displayCardTopBar) {
 		StudyTopBar(navController, viewModel)
+	} else if (displaySettingsTopBar) {
+		SettingsTopBar(navController, viewModel)
+	} else if (displayProgressTopBar) {
+		ProgressTopBar(navController)
 	}
 }
 
@@ -81,7 +83,9 @@ fun HomeTopBar(navController: NavHostController, viewModel: CardViewModel) {
 	) {
 		Image(painter = painterResource(R.drawable.setting_icon),
 			contentDescription = "settings",
-			modifier = Modifier.clickable { })
+			modifier = Modifier.clickable {
+				navController.navigate(Screen.SettingsScreen.route)
+			})
 		Text(
 			text = "Collections",
 			color = Color.White,
@@ -183,5 +187,65 @@ fun StudyTopBar(navController: NavHostController, viewModel: CardViewModel) {
 			modifier = Modifier.clickable {
 				navController.navigate(Screen.CollectionsScreen.route)
 			})
+	}
+}
+
+@Composable
+fun SettingsTopBar(navController: NavHostController, viewModel: CardViewModel) {
+	Row(
+		modifier = Modifier
+			.fillMaxWidth()
+			.padding(16.dp),
+		horizontalArrangement = Arrangement.SpaceBetween,
+	) {
+		Image(painter = painterResource(R.drawable.close_icon),
+			contentDescription = "close",
+			modifier = Modifier.clickable {
+				navController.navigate(Screen.CollectionsScreen.route)
+			})
+		Text(
+			text = "Settings",
+			textAlign = TextAlign.Center,
+			color = Color.White,
+			fontSize = 18.sp,
+			fontStyle = FontStyle.Normal,
+			fontWeight = FontWeight.Bold,
+			modifier = Modifier
+				.fillMaxWidth(1f)
+		)
+		Spacer(
+			modifier = Modifier
+				.width(5.dp)
+		)
+	}
+}
+
+@Composable
+fun ProgressTopBar(navController: NavHostController) {
+	Row(
+		modifier = Modifier
+			.fillMaxWidth()
+			.padding(16.dp),
+		horizontalArrangement = Arrangement.SpaceBetween,
+	) {
+		Image(painter = painterResource(R.drawable.setting_icon),
+			contentDescription = "settings",
+			modifier = Modifier.clickable {
+				navController.navigate(Screen.SettingsScreen.route)
+			})
+		Text(
+			text = "Progress",
+			textAlign = TextAlign.Center,
+			color = Color.White,
+			fontSize = 18.sp,
+			fontStyle = FontStyle.Normal,
+			fontWeight = FontWeight.Bold,
+			modifier = Modifier
+				.fillMaxWidth(1f)
+		)
+		Spacer(
+			modifier = Modifier
+				.width(5.dp)
+		)
 	}
 }

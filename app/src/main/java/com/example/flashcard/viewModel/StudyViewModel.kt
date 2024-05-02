@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.flashcard.model.dao.CardDao
 import com.example.flashcard.model.dao.CollectionDao
+import com.example.flashcard.model.dao.SessionDao
 import com.example.flashcard.model.entities.CardEntity
 import com.example.flashcard.model.entities.calculateDueDate
 import com.example.flashcard.screens.study.CardState
@@ -13,7 +14,8 @@ import kotlinx.coroutines.launch
 
 class StudyViewModel(
 	private val cardDao: CardDao,
-	private val collectionDao: CollectionDao
+	private val collectionDao: CollectionDao,
+	private val sessionDao: SessionDao
 ) : ViewModel() {
 	var cards: List<CardEntity> = emptyList()
 		private set
@@ -50,6 +52,10 @@ class StudyViewModel(
 		val lastReviewDate = System.currentTimeMillis()
 		val dueDate = calculateDueDate(card.boxNumber + 1, lastReviewDate)
 		Log.d("CardScreen", "Due Date: $dueDate")
+		var isMasteredState = 0
+		if (card.boxNumber + 1 == 7) {
+			isMasteredState = 1
+		}
 		
 		val updatedCard = CardEntity(
 			id = card.id,
@@ -58,7 +64,8 @@ class StudyViewModel(
 			collectionId = card.collectionId,
 			boxNumber = card.boxNumber + 1,
 			lastReviewDate = lastReviewDate,
-			dueDate = dueDate
+			dueDate = dueDate,
+			isMastered = isMasteredState
 		)
 		
 		viewModelScope.launch {
@@ -70,7 +77,7 @@ class StudyViewModel(
 		card: CardEntity
 	) {
 		val lastReviewDate = System.currentTimeMillis()
-		val dueDate = calculateDueDate(1, lastReviewDate)
+		val dueDate = calculateDueDate(0, lastReviewDate)
 		Log.d("CardScreen", "Due Date: $dueDate")
 		
 		val updatedCard = CardEntity(
@@ -78,13 +85,19 @@ class StudyViewModel(
 			question = card.question,
 			answer = card.answer,
 			collectionId = card.collectionId,
-			boxNumber = 1,
+			boxNumber = 0,
 			lastReviewDate = lastReviewDate,
-			dueDate = dueDate
+			dueDate = dueDate,
+			isMastered = 0
 		)
 		
 		viewModelScope.launch {
 			cardDao.upsertCard(updatedCard)
 		}
+	}
+	
+	// Sessions
+	fun addNewSession(startDate: Long, endDate: Long) {
+	
 	}
 }

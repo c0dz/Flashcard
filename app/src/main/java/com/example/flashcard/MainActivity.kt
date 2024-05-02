@@ -14,6 +14,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
 import com.example.flashcard.model.dao.CardDao
 import com.example.flashcard.model.dao.CollectionDao
+import com.example.flashcard.model.dao.SessionDao
 import com.example.flashcard.model.database.CardDatabase
 import com.example.flashcard.screens.main.MainScreen
 import com.example.flashcard.viewModel.CardViewModel
@@ -35,6 +36,8 @@ class MainActivity : ComponentActivity() {
 			val collectionDao: CollectionDao = CardDatabase
 				.getInstance(navController.context).collectionDao
 			val cardDoa: CardDao = CardDatabase.getInstance(navController.context).cardDao
+			val sessionDao: SessionDao = CardDatabase
+				.getInstance(navController.context).sessionDao
 			
 			// Card ViewModel
 			val cardViewModel: CardViewModel = viewModel<CardViewModel>(
@@ -54,7 +57,8 @@ class MainActivity : ComponentActivity() {
 					override fun <T : ViewModel> create(modelClass: Class<T>): T {
 						return StudyViewModel(
 							cardDao = cardDoa,
-							collectionDao = collectionDao
+							collectionDao = collectionDao,
+							sessionDao = sessionDao
 						) as T
 					}
 				}

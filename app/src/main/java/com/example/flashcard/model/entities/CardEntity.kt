@@ -17,7 +17,7 @@ import androidx.room.PrimaryKey
 			onDelete = CASCADE,
 			onUpdate = CASCADE
 		)
-	]
+	],
 )
 data class CardEntity(
 	@PrimaryKey(autoGenerate = true)
@@ -31,7 +31,9 @@ data class CardEntity(
 	@ColumnInfo(name = "last_review_date")
 	var lastReviewDate: Long?,
 	@ColumnInfo(name = "due_date")
-	var dueDate: Long?
+	var dueDate: Long?,
+	@ColumnInfo(name = "is_mastered", defaultValue = "0")
+	var isMastered: Int = 0
 )
 
 fun calculateDueDate(boxNumber: Int, lastReviewDate: Long = System.currentTimeMillis()): Long {

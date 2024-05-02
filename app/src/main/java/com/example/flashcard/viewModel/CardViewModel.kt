@@ -106,7 +106,8 @@ class CardViewModel(
 					answer = cardData.answer,
 					collectionId = createdCollectionID.longValue,
 					lastReviewDate = lastReviewDateDefault,
-					dueDate = dueDateDefault
+					dueDate = dueDateDefault,
+					isMastered = 0
 				)
 			}
 			

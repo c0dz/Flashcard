@@ -19,6 +19,7 @@ import com.example.flashcard.screens.ProgressScreen
 import com.example.flashcard.screens.ReviewScreen
 import com.example.flashcard.screens.collections.AddCards
 import com.example.flashcard.screens.collections.AddCollection
+import com.example.flashcard.screens.settings.SettingsScreen
 import com.example.flashcard.screens.study.CardScreen
 import com.example.flashcard.viewModel.CardViewModel
 import com.example.flashcard.viewModel.StudyViewModel
@@ -36,6 +37,8 @@ fun Navigation(
 		startDestination = Screen.CollectionsScreen.route
 	) {
 		
+		//////////////
+		// Main Screen
 		composable(
 			Screen.CollectionsScreen.route,
 //			enterTransition = {
@@ -55,7 +58,6 @@ fun Navigation(
 				navController, cardViewModel = cardViewModel, studyViewModel = studyViewModel
 			)
 		}
-		// Main Page
 		composable(Screen.ReviewScreen.route) { ReviewScreen() }
 		composable(Screen.ProgressScreen.route) { ProgressScreen() }
 		
@@ -81,6 +83,12 @@ fun Navigation(
 //		) {
 //			StudyAnswerScreen()
 //		}
+		
+		//////////////
+		// Settings
+		composable(Screen.SettingsScreen.route) {
+			SettingsScreen(navController)
+		}
 	}
 }
 

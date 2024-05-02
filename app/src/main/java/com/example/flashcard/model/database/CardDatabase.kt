@@ -3,23 +3,29 @@ package com.example.flashcard.model.database
 import android.content.Context
 import androidx.room.AutoMigration
 import androidx.room.Database
+import androidx.room.DeleteColumn
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import androidx.room.migration.AutoMigrationSpec
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.flashcard.model.DateConverters
 import com.example.flashcard.model.dao.CardDao
 import com.example.flashcard.model.dao.CollectionDao
+import com.example.flashcard.model.dao.SessionDao
 import com.example.flashcard.model.entities.CardEntity
 import com.example.flashcard.model.entities.CollectionEntity
+import com.example.flashcard.model.entities.SessionEntity
 
 @Database(
-	entities = [CardEntity::class, CollectionEntity::class],
-	version = 8,
+	entities = [CardEntity::class, CollectionEntity::class, SessionEntity::class],
+	version = 10,
 	autoMigrations = [
 		AutoMigration(
-			from = 7,
-			to = 8,
-//			spec = CardDatabaseMigration6To7::class
+			from = 9,
+			to = 10,
+			spec = Spec::class
 		)
 	],
 	exportSchema = true,
@@ -29,6 +35,7 @@ abstract class CardDatabase : RoomDatabase() {
 	
 	abstract val cardDao: CardDao
 	abstract val collectionDao: CollectionDao
+	abstract val sessionDao: SessionDao
 	
 	companion object {
 		private const val DATABASE_NAME = "card_database.db"
@@ -46,7 +53,7 @@ abstract class CardDatabase : RoomDatabase() {
 						CardDatabase::class.java,
 						DATABASE_NAME
 					)
-						//.addMigrations(Migration6To7)
+						.addMigrations(Migration)
 						.build()
 					
 					INSTANCE = instance
@@ -58,11 +65,29 @@ abstract class CardDatabase : RoomDatabase() {
 	}
 }
 
-//
-//val Migration6To7 = object : Migration(1, 2) {
-//	override fun migrate(db: SupportSQLiteDatabase) {
-//		db.execSQL("ALTER TABLE cards ADD COLUMN box_number INTEGER DEFAULT 1 not null");
-//		//db.execSQL("ALTER TABLE cards ADD COLUMN last_review_date TEXT NOT NULL")
-//		//db.execSQL("ALTER TABLE cards ADD COLUMN due_date TEXT NOT NULL")
-//	}
-//}
+
+val Migration = object : Migration(9, 10) {
+	override fun migrate(db: SupportSQLiteDatabase) {
+		db.execSQL(
+			"""
+            CREATE TABLE IF NOT EXISTS sessions (
+                id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                start_time INTEGER,
+                end_time INTEGER,
+                duration INTEGER,
+                cards_reviewed INTEGER NOT NULL,
+                cards_failed INTEGER NOT NULL,
+                score INTEGER NOT NULL
+            );
+        """.trimIndent()
+		)
+	}
+}
+
+@DeleteColumn.Entries(
+	DeleteColumn(
+		tableName = "sessions",
+		columnName = "session_date"
+	)
+)
+class Spec : AutoMigrationSpec
