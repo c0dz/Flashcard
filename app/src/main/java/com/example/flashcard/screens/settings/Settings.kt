@@ -131,7 +131,7 @@ fun SettingsScreen(navController: NavHostController, studyViewModel: StudyViewMo
 					.background(homeCardBorderColor)
 					.padding(bottom = 15.dp, top = 15.dp, start = 20.dp, end = 25.dp),
 				verticalAlignment = Alignment.CenterVertically,
-				horizontalArrangement = Arrangement.SpaceBetween
+				horizontalArrangement = Arrangement.Center
 			) {
 				Text(
 					text = "Clear Data",

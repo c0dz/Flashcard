@@ -14,4 +14,10 @@ interface SessionDao {
 	
 	@Query("DELETE FROM sessions;")
 	suspend fun deleteAllSessions()
+	
+	@Query("SELECT AVG(score) FROM sessions")
+	suspend fun getAverageScore(): Double
+	
+	@Query("SELECT SUM(duration) FROM sessions")
+	suspend fun getTotalDuration(): Long
 }

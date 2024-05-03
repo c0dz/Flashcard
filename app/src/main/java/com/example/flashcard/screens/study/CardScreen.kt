@@ -55,7 +55,6 @@ fun CardScreen(
 	val cardsList = remember {
 		mutableStateOf(viewModel.cards)
 	}
-	Log.d("CardScreen", "CardScreen: $cardsList")
 	
 	val (cardState, updateCardState) = remember { mutableStateOf(CardState.Question) }
 	
@@ -170,14 +169,14 @@ private fun MarkCard(
 		Column(
 			modifier = Modifier
 				.clickable {
-					Log.d("CardScreen", "time: ${cardsList.value.first().dueDate}")
-					Log.d("CardScreen", "time: ${cardsList.value.first().lastReviewDate}")
-					
+					viewModel.sessionInfo.cardsNumber++
 					viewModel.moveToNextBox(
 						card = cardsList.value.first()
 					)
-					if (cardsList.value.size == 1) {
+					if (cardsList.value.size == 1) { // Last Card
+						viewModel.sessionInfo.endTime = System.currentTimeMillis()
 						navController.navigate(Screen.CollectionsScreen.route)
+						viewModel.addNewSession()
 					}
 					viewModel.removeCurrentCardFromList(
 						cardsList,
@@ -205,11 +204,15 @@ private fun MarkCard(
 		Column(
 			modifier = Modifier
 				.clickable {
+					viewModel.sessionInfo.cardsNumber++
+					viewModel.sessionInfo.failedCards++
 					viewModel.moveToFirstBox(
 						card = cardsList.value.first()
 					)
-					if (cardsList.value.size == 1) {
+					if (cardsList.value.size == 1) { // Last Card
+						viewModel.sessionInfo.endTime = System.currentTimeMillis()
 						navController.navigate(Screen.CollectionsScreen.route)
+						viewModel.addNewSession()
 					}
 					viewModel.removeCurrentCardFromList(
 						cardsList,

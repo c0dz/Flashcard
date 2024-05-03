@@ -26,4 +26,10 @@ interface CardDao {
 	
 	@Query("DELETE FROM cards;")
 	suspend fun deleteAllCards()
+	
+	@Query("SELECT COUNT(*) FROM cards;")
+	suspend fun getTotalCardCount(): Long
+	
+	@Query("SELECT COUNT(*) FROM cards WHERE is_mastered = 1;")
+	suspend fun getMasteredCardCount(): Long
 }

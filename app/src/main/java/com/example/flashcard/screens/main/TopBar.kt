@@ -1,5 +1,6 @@
 package com.example.flashcard.screens.main
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -35,12 +36,6 @@ import com.example.flashcard.viewModel.CardViewModel
 
 @Composable
 fun TopBarDisplay(navController: NavHostController, viewModel: CardViewModel) {
-	val homeScreens = listOf(
-		Screen.CollectionsScreen,
-		Screen.ReviewScreen,
-		Screen.ProgressScreen
-	)
-	
 	val addCollectionScreens = listOf(
 		Screen.AddCardScreen,
 		Screen.AddCollectionDetailScreen
@@ -51,13 +46,13 @@ fun TopBarDisplay(navController: NavHostController, viewModel: CardViewModel) {
 	val currentDestination = navBackStackEntry?.destination
 	
 	//Check for the current route and choose the Top Bar
-	val displayHomeTopBar = homeScreens.any { it.route == currentDestination?.route }
+	val displayHomeTopBar = Screen.CollectionsScreen.route == currentDestination?.route
 	val displayAddCollectionTopBar =
 		addCollectionScreens.any { it.route == currentDestination?.route }
-	//val displayStudyTopBar = studyScreens.any { it.route == currentDestination?.route }
 	val displayCardTopBar = Screen.CardScreen.route == currentDestination?.route
 	val displaySettingsTopBar = Screen.SettingsScreen.route == currentDestination?.route
 	val displayProgressTopBar = Screen.ProgressScreen.route == currentDestination?.route
+	
 	
 	if (displayHomeTopBar) {
 		HomeTopBar(navController, viewModel)
@@ -66,8 +61,10 @@ fun TopBarDisplay(navController: NavHostController, viewModel: CardViewModel) {
 	} else if (displayCardTopBar) {
 		StudyTopBar(navController, viewModel)
 	} else if (displaySettingsTopBar) {
+		Log.d("TopBar", "Display Settings Top Bar")
 		SettingsTopBar(navController, viewModel)
 	} else if (displayProgressTopBar) {
+		Log.d("TopBar", "Display Progress Top Bar")
 		ProgressTopBar(navController)
 	}
 }
@@ -226,13 +223,8 @@ fun ProgressTopBar(navController: NavHostController) {
 		modifier = Modifier
 			.fillMaxWidth()
 			.padding(16.dp),
-		horizontalArrangement = Arrangement.SpaceBetween,
+		horizontalArrangement = Arrangement.Center,
 	) {
-		Image(painter = painterResource(R.drawable.setting_icon),
-			contentDescription = "settings",
-			modifier = Modifier.clickable {
-				navController.navigate(Screen.SettingsScreen.route)
-			})
 		Text(
 			text = "Progress",
 			textAlign = TextAlign.Center,
@@ -242,10 +234,6 @@ fun ProgressTopBar(navController: NavHostController) {
 			fontWeight = FontWeight.Bold,
 			modifier = Modifier
 				.fillMaxWidth(1f)
-		)
-		Spacer(
-			modifier = Modifier
-				.width(5.dp)
 		)
 	}
 }

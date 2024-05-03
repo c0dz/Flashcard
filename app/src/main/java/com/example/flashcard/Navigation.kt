@@ -59,7 +59,7 @@ fun Navigation(
 			)
 		}
 		composable(Screen.ReviewScreen.route) { ReviewScreen() }
-		composable(Screen.ProgressScreen.route) { ProgressScreen() }
+		composable(Screen.ProgressScreen.route) { ProgressScreen(studyViewModel) }
 		
 		//////////////
 		// Add Collection
@@ -78,11 +78,6 @@ fun Navigation(
 				navController = navController
 			)
 		}
-//		composable(
-//			Screen.StudyAnswerScreen.route,
-//		) {
-//			StudyAnswerScreen()
-//		}
 		
 		//////////////
 		// Settings

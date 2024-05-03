@@ -71,6 +71,8 @@ fun CollectionComponent(
 			.background(homeBackgroundColor)
 			.clickable {
 				viewModel.setStudyCollection(id)
+				viewModel.sessionInfo.startTime =
+					System.currentTimeMillis() // set session start time
 				navController.navigate(Screen.CardScreen.route)
 			},
 		verticalArrangement = Arrangement.Center,

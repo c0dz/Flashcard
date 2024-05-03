@@ -20,5 +20,5 @@ data class SessionEntity(
 	var cardsReviewed: Long = 0,
 	@ColumnInfo(name = "cards_failed")
 	var cardsFailed: Long = 0,
-	var score: Long = 0,
+	var score: Int = 0,
 )

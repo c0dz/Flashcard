@@ -4,10 +4,13 @@ import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.flashcard.data.HourMinute
+import com.example.flashcard.data.SessionInfo
 import com.example.flashcard.model.dao.CardDao
 import com.example.flashcard.model.dao.CollectionDao
 import com.example.flashcard.model.dao.SessionDao
 import com.example.flashcard.model.entities.CardEntity
+import com.example.flashcard.model.entities.SessionEntity
 import com.example.flashcard.model.entities.calculateDueDate
 import com.example.flashcard.screens.study.CardState
 import kotlinx.coroutines.launch
@@ -107,7 +110,69 @@ class StudyViewModel(
 	}
 	
 	// Sessions
-	fun addNewSession(startDate: Long, endDate: Long) {
+	var sessionInfo = SessionInfo(
+		startTime = 0,
+		endTime = 0,
+		cardsNumber = 0,
+		failedCards = 0
+	)
 	
+	fun addNewSession() {
+		val newSession = SessionEntity(
+			startTime = sessionInfo.startTime,
+			endTime = sessionInfo.endTime,
+			duration = sessionInfo.endTime - sessionInfo.startTime,
+			cardsReviewed = sessionInfo.cardsNumber,
+			cardsFailed = sessionInfo.failedCards,
+			score = ((1 - (sessionInfo.failedCards.toDouble() / sessionInfo.cardsNumber)) * 100).toInt()
+		)
+		viewModelScope.launch {
+			sessionDao.insertSession(newSession)
+		}
+		SessionInfo.setToDefault(sessionInfo) // reset value
+	}
+	
+	
+	// Progress
+	private var totalCardsCount: Long = 0
+	private var masteredCardsCount: Long = 0
+	private var successRate: Double = 0.0
+	private var timeSpent: Long = 0
+	
+	fun getTotalCardCount(): Long {
+		viewModelScope.launch {
+			totalCardsCount = cardDao.getTotalCardCount()
+			Log.d("StudyViewModel", "totalCards: $totalCardsCount")
+		}
+		return totalCardsCount
+	}
+	
+	fun getMasteredCardsCount(): Long {
+		viewModelScope.launch {
+			masteredCardsCount = cardDao.getMasteredCardCount()
+		}
+		return masteredCardsCount
+	}
+	
+	fun getSuccessRate(): Double {
+		viewModelScope.launch {
+			successRate = sessionDao.getAverageScore()
+		}
+		return successRate
+	}
+	
+	fun getTimeSpent(): HourMinute {
+		viewModelScope.launch {
+			timeSpent = sessionDao.getTotalDuration()
+		}
+		val hours = (timeSpent.toDouble() / 3600000).toInt()
+		val minutes = ((timeSpent.toDouble() % 3600000) / 60000).toInt()
+		val seconds = ((timeSpent.toDouble() % 60000) / 1000).toInt()
+		
+		return HourMinute(
+			hour = hours,
+			minute = minutes,
+			second = seconds
+		)
 	}
 }
