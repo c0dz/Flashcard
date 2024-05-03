@@ -96,6 +96,16 @@ class StudyViewModel(
 		}
 	}
 	
+	// Clear Data
+	fun clearDatabase() {
+		viewModelScope.launch {
+			cardDao.deleteAllCards()
+			collectionDao.deleteAllCollections()
+			sessionDao.deleteAllSessions()
+			Log.d("StudyViewModel", "Cleared Database.")
+		}
+	}
+	
 	// Sessions
 	fun addNewSession(startDate: Long, endDate: Long) {
 	

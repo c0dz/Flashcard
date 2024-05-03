@@ -87,7 +87,10 @@ fun Navigation(
 		//////////////
 		// Settings
 		composable(Screen.SettingsScreen.route) {
-			SettingsScreen(navController)
+			SettingsScreen(
+				navController,
+				studyViewModel
+			)
 		}
 	}
 }
