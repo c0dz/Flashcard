@@ -58,7 +58,7 @@ fun Navigation(
 				navController, cardViewModel = cardViewModel, studyViewModel = studyViewModel
 			)
 		}
-		composable(Screen.ReviewScreen.route) { ReviewScreen() }
+		composable(Screen.ReviewScreen.route) { ReviewScreen(navController, studyViewModel) }
 		composable(Screen.ProgressScreen.route) { ProgressScreen(studyViewModel) }
 		
 		//////////////

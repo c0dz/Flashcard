@@ -11,9 +11,11 @@ interface SessionDao {
 	@Insert(onConflict = OnConflictStrategy.IGNORE)
 	suspend fun insertSession(session: SessionEntity): Long
 	
-	
 	@Query("DELETE FROM sessions;")
 	suspend fun deleteAllSessions()
+	
+	@Query("SELECT * FROM sessions;")
+	suspend fun getAllSessions(): List<SessionEntity>
 	
 	@Query("SELECT AVG(score) FROM sessions")
 	suspend fun getAverageScore(): Double

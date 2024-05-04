@@ -32,6 +32,7 @@ import com.example.flashcard.viewModel.StudyViewModel
 @Composable
 fun ProgressScreen(studyViewModel: StudyViewModel) {
 	val (hours, minutes, seconds) = studyViewModel.getTimeSpent()
+	val streak = studyViewModel.getStreak()
 	val progressCards: Array<ProgressItem> = arrayOf(
 		ProgressItem(
 			title = "Total Cards",
@@ -47,7 +48,7 @@ fun ProgressScreen(studyViewModel: StudyViewModel) {
 		),
 		ProgressItem(
 			title = "Streak",
-			value = "4"
+			value = "$streak ${if (streak > 1) "days" else "day"}"
 		),
 		ProgressItem(
 			title = "Time Spent",

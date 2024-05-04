@@ -14,6 +14,8 @@ import com.example.flashcard.model.entities.SessionEntity
 import com.example.flashcard.model.entities.calculateDueDate
 import com.example.flashcard.screens.study.CardState
 import kotlinx.coroutines.launch
+import java.util.Calendar
+import java.util.Date
 
 class StudyViewModel(
 	private val cardDao: CardDao,
@@ -25,16 +27,17 @@ class StudyViewModel(
 	
 	fun setStudyCollection(collectionId: Long) {
 		viewModelScope.launch {
-			Log.d("StudyViewModel", "setStudyCollection: $collectionId")
-			Log.d("StudyViewModel", "STARTED SETTING STUDY COLLECTION")
 			cards = cardDao.getDueCards(collectionId)
-			Log.d("StudyViewModel", "Time: ${System.currentTimeMillis()}")
-			Log.d("StudyViewModel", "FINISHED SETTING STUDY COLLECTION")
-			
 			// check if the cards list is empty
 			if (cards.isEmpty()) {
 				Log.e("StudyViewModel", "Cards List is Empty.")
 			}
+		}
+	}
+	
+	fun setAllCards() {
+		viewModelScope.launch {
+			cards = cardDao.getAllCards()
 		}
 	}
 	
@@ -142,7 +145,6 @@ class StudyViewModel(
 	fun getTotalCardCount(): Long {
 		viewModelScope.launch {
 			totalCardsCount = cardDao.getTotalCardCount()
-			Log.d("StudyViewModel", "totalCards: $totalCardsCount")
 		}
 		return totalCardsCount
 	}
@@ -158,7 +160,7 @@ class StudyViewModel(
 		viewModelScope.launch {
 			successRate = sessionDao.getAverageScore()
 		}
-		return successRate
+		return String.format("%.2f", successRate).toDouble()
 	}
 	
 	fun getTimeSpent(): HourMinute {
@@ -174,5 +176,45 @@ class StudyViewModel(
 			minute = minutes,
 			second = seconds
 		)
+	}
+	
+	// Streak
+	private var sessions: List<SessionEntity> = listOf()
+	fun getStreak(): Int {
+		viewModelScope.launch {
+			sessions = sessionDao.getAllSessions()
+		}
+		if (sessions.isEmpty()) return 0
+		
+		// Sort sessions by start time
+		val sortedSessions = sessions.sortedBy { it.startTime }
+		
+		var streakCount = 1 // At least one session is needed for a streak
+		var currentStreakLength = 1
+		var previousDate: Date? = Date(sortedSessions.first().startTime ?: return 0)
+		
+		sortedSessions.drop(1).forEach { session ->
+			val currentDate = Date(session.startTime ?: return@forEach)
+			
+			// Check if the current date is consecutive with the previous date
+			if (isConsecutive(previousDate!!, currentDate)) {
+				currentStreakLength++
+				streakCount = maxOf(streakCount, currentStreakLength)
+			} else {
+				// Start a new streak
+				currentStreakLength = 1
+			}
+			
+			previousDate = currentDate
+		}
+		
+		return streakCount
+	}
+	
+	private fun isConsecutive(date1: Date, date2: Date): Boolean {
+		val calendar = Calendar.getInstance()
+		calendar.time = date1
+		calendar.add(Calendar.DAY_OF_YEAR, 1)
+		return calendar.time == date2
 	}
 }

@@ -1,6 +1,5 @@
 package com.example.flashcard.screens.main
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -52,7 +51,7 @@ fun TopBarDisplay(navController: NavHostController, viewModel: CardViewModel) {
 	val displayCardTopBar = Screen.CardScreen.route == currentDestination?.route
 	val displaySettingsTopBar = Screen.SettingsScreen.route == currentDestination?.route
 	val displayProgressTopBar = Screen.ProgressScreen.route == currentDestination?.route
-	
+	val displayReviewTopBar = Screen.ReviewScreen.route == currentDestination?.route
 	
 	if (displayHomeTopBar) {
 		HomeTopBar(navController, viewModel)
@@ -61,11 +60,11 @@ fun TopBarDisplay(navController: NavHostController, viewModel: CardViewModel) {
 	} else if (displayCardTopBar) {
 		StudyTopBar(navController, viewModel)
 	} else if (displaySettingsTopBar) {
-		Log.d("TopBar", "Display Settings Top Bar")
 		SettingsTopBar(navController, viewModel)
 	} else if (displayProgressTopBar) {
-		Log.d("TopBar", "Display Progress Top Bar")
-		ProgressTopBar(navController)
+		ProgressTopBar()
+	} else if (displayReviewTopBar) {
+		ReviewTopBar()
 	}
 }
 
@@ -218,7 +217,7 @@ fun SettingsTopBar(navController: NavHostController, viewModel: CardViewModel) {
 }
 
 @Composable
-fun ProgressTopBar(navController: NavHostController) {
+fun ProgressTopBar() {
 	Row(
 		modifier = Modifier
 			.fillMaxWidth()
@@ -227,6 +226,27 @@ fun ProgressTopBar(navController: NavHostController) {
 	) {
 		Text(
 			text = "Progress",
+			textAlign = TextAlign.Center,
+			color = Color.White,
+			fontSize = 18.sp,
+			fontStyle = FontStyle.Normal,
+			fontWeight = FontWeight.Bold,
+			modifier = Modifier
+				.fillMaxWidth(1f)
+		)
+	}
+}
+
+@Composable
+fun ReviewTopBar() {
+	Row(
+		modifier = Modifier
+			.fillMaxWidth()
+			.padding(16.dp),
+		horizontalArrangement = Arrangement.Center,
+	) {
+		Text(
+			text = "Review",
 			textAlign = TextAlign.Center,
 			color = Color.White,
 			fontSize = 18.sp,
