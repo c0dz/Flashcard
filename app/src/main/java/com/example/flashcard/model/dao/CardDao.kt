@@ -32,4 +32,11 @@ interface CardDao {
 	
 	@Query("SELECT COUNT(*) FROM cards WHERE is_mastered = 1;")
 	suspend fun getMasteredCardCount(): Long
+	
+	@Query("SELECT COUNT(*) FROM cards WHERE collection_id= :collectionId;")
+	suspend fun getCollectionCardsCount(collectionId: Long): Long
+	
+	@Query("SELECT COUNT(*) FROM cards WHERE collection_id= :collectionId AND is_mastered=1;")
+	suspend fun getCollectionMasteredCardsCount(collectionId: Long): Long
+	
 }

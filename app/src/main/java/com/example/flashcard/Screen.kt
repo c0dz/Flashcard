@@ -12,6 +12,7 @@ sealed class Screen(val route: String) {
 	
 	// STUDY SCREEN
 	data object CardScreen : Screen("card_screen")
+	data object WellDoneScreen : Screen("well_done_screen")
 	
 	// SETTINGS SCREEN
 	data object SettingsScreen : Screen("settings_screen")

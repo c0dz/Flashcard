@@ -14,4 +14,6 @@ data class CollectionEntity(
 	var name: String = "",
 	var tags: String = "",
 	var description: String = "",
+	@ColumnInfo(name = "progress", defaultValue = "0")
+	var progress: Float = 0f
 )

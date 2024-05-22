@@ -1,6 +1,7 @@
 package com.example.flashcard.data
 
 data class SessionInfo(
+	var collectionId: Long,
 	var startTime: Long,
 	var endTime: Long,
 	var cardsNumber: Long,
@@ -8,6 +9,7 @@ data class SessionInfo(
 ) {
 	companion object {
 		fun setToDefault(sessionInfo: SessionInfo) {
+			sessionInfo.collectionId = 0
 			sessionInfo.startTime = 0
 			sessionInfo.endTime = 0
 			sessionInfo.cardsNumber = 0

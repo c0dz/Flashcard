@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 11,
-    "identityHash": "4a8d10ac36185ca4943fb8a49f5e68ea",
+    "identityHash": "956501c567a23adc90b9a52454d86ce0",
     "entities": [
       {
         "tableName": "cards",
@@ -92,7 +92,7 @@
       },
       {
         "tableName": "collections",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `collection_name` TEXT NOT NULL, `tags` TEXT NOT NULL, `description` TEXT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `collection_name` TEXT NOT NULL, `tags` TEXT NOT NULL, `description` TEXT NOT NULL, `progress` REAL NOT NULL DEFAULT 0)",
         "fields": [
           {
             "fieldPath": "id",
@@ -117,6 +117,13 @@
             "columnName": "description",
             "affinity": "TEXT",
             "notNull": true
+          },
+          {
+            "fieldPath": "progress",
+            "columnName": "progress",
+            "affinity": "REAL",
+            "notNull": true,
+            "defaultValue": "0"
           }
         ],
         "primaryKey": {
@@ -130,7 +137,7 @@
       },
       {
         "tableName": "sessions",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `start_time` INTEGER, `end_time` INTEGER, `duration` INTEGER, `cards_reviewed` INTEGER NOT NULL, `cards_failed` INTEGER NOT NULL, `score` REAL NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `start_time` INTEGER, `end_time` INTEGER, `duration` INTEGER, `cards_reviewed` INTEGER NOT NULL, `cards_failed` INTEGER NOT NULL, `score` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -171,7 +178,7 @@
           {
             "fieldPath": "score",
             "columnName": "score",
-            "affinity": "REAL",
+            "affinity": "INTEGER",
             "notNull": true
           }
         ],
@@ -188,7 +195,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '4a8d10ac36185ca4943fb8a49f5e68ea')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '956501c567a23adc90b9a52454d86ce0')"
     ]
   }
 }

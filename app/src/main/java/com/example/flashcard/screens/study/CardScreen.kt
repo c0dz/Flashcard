@@ -175,7 +175,8 @@ private fun MarkCard(
 					)
 					if (cardsList.value.size == 1) { // Last Card
 						viewModel.sessionInfo.endTime = System.currentTimeMillis()
-						navController.navigate(Screen.CollectionsScreen.route)
+						viewModel.updateProgress(viewModel.sessionInfo.collectionId)
+						navController.navigate(Screen.WellDoneScreen.route)
 						viewModel.addNewSession()
 					}
 					viewModel.removeCurrentCardFromList(
@@ -211,7 +212,8 @@ private fun MarkCard(
 					)
 					if (cardsList.value.size == 1) { // Last Card
 						viewModel.sessionInfo.endTime = System.currentTimeMillis()
-						navController.navigate(Screen.CollectionsScreen.route)
+						viewModel.updateProgress(viewModel.sessionInfo.collectionId)
+						navController.navigate(Screen.WellDoneScreen.route)
 						viewModel.addNewSession()
 					}
 					viewModel.removeCurrentCardFromList(

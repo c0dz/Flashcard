@@ -19,3 +19,7 @@ val cardBackgroundColor = Color(0xFF343141)
 val cardLabelColor = Color(0xFFAF93FF)
 val homeCardBorderColor = Color(0xFFADA7C1)
 val homeCardBackgroundColor = Color(0xFF846BCD)
+val greenTextColor = Color(0xFF60D88B)
+
+val collectionBackgroundStart = Color(0xFF392d69)
+val collectionBackgroundEnd = Color(0xFFb57bee)

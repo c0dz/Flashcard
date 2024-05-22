@@ -102,6 +102,10 @@ class StudyViewModel(
 		}
 	}
 	
+	// Collection Screen(progress bar)
+	private var totalCollectionCardsCount: Long = 0
+	private var totalCollectionMasteredCardsCount: Long = 0
+	
 	// Clear Data
 	fun clearDatabase() {
 		viewModelScope.launch {
@@ -112,8 +116,45 @@ class StudyViewModel(
 		}
 	}
 	
+	private fun getCollectionCardsCount(collectionId: Long): Long {
+		viewModelScope.launch {
+			totalCollectionCardsCount = cardDao.getCollectionCardsCount(collectionId)
+		}
+		return totalCollectionCardsCount
+	}
+	
+	private fun getCollectionMasteredCardsCount(collectionId: Long): Long {
+		viewModelScope.launch {
+			totalCollectionMasteredCardsCount =
+				cardDao.getCollectionMasteredCardsCount(collectionId)
+		}
+		return totalCollectionMasteredCardsCount
+	}
+	
+	private fun getProgress(collectionId: Long): Float {
+		var progress = 0f
+		viewModelScope.launch {
+			val masteredCardsCount = getCollectionMasteredCardsCount(collectionId)
+			val totalCardsCount = getCollectionCardsCount(collectionId)
+			Log.d("Progress", "Returned total: $totalCardsCount")
+			progress = masteredCardsCount.toFloat() / totalCardsCount
+			Log.d("Progress", "Returned P: $progress")
+		}
+		
+		return progress
+	}
+	
+	fun updateProgress(collectionId: Long) {
+		viewModelScope.launch {
+			val progress = getProgress(collectionId)
+			Log.d("Progress", "Progress Value: $progress")
+			collectionDao.updateCollectionProgress(collectionId = collectionId, progress = progress)
+		}
+	}
+	
 	// Sessions
 	var sessionInfo = SessionInfo(
+		collectionId = 0,
 		startTime = 0,
 		endTime = 0,
 		cardsNumber = 0,
@@ -217,4 +258,6 @@ class StudyViewModel(
 		calendar.add(Calendar.DAY_OF_YEAR, 1)
 		return calendar.time == date2
 	}
+	
+	
 }

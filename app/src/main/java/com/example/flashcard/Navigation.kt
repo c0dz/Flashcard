@@ -21,6 +21,7 @@ import com.example.flashcard.screens.collections.AddCards
 import com.example.flashcard.screens.collections.AddCollection
 import com.example.flashcard.screens.settings.SettingsScreen
 import com.example.flashcard.screens.study.CardScreen
+import com.example.flashcard.screens.study.WellDoneScreen
 import com.example.flashcard.viewModel.CardViewModel
 import com.example.flashcard.viewModel.StudyViewModel
 
@@ -75,6 +76,12 @@ fun Navigation(
 		composable(Screen.CardScreen.route) {
 			CardScreen(
 				viewModel = studyViewModel,
+				navController = navController
+			)
+		}
+		
+		composable(Screen.WellDoneScreen.route) {
+			WellDoneScreen(
 				navController = navController
 			)
 		}

@@ -50,5 +50,7 @@ fun calculateDueDate(boxNumber: Int, lastReviewDate: Long = System.currentTimeMi
 	}
 	Log.d("Card", "Interval: $intervalInDays")
 	
-	return lastReviewDate + intervalInDays * 24 * 60 * 60 * 1000
+	//return lastReviewDate + intervalInDays * 24 * 60 * 60 * 1000
+	return lastReviewDate + intervalInDays * 1
+	
 }

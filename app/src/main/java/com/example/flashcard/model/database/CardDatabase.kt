@@ -3,11 +3,9 @@ package com.example.flashcard.model.database
 import android.content.Context
 import androidx.room.AutoMigration
 import androidx.room.Database
-import androidx.room.DeleteColumn
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import androidx.room.migration.AutoMigrationSpec
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.flashcard.model.DateConverters
@@ -20,12 +18,12 @@ import com.example.flashcard.model.entities.SessionEntity
 
 @Database(
 	entities = [CardEntity::class, CollectionEntity::class, SessionEntity::class],
-	version = 10,
+	version = 11,
 	autoMigrations = [
 		AutoMigration(
-			from = 9,
-			to = 10,
-			spec = Spec::class
+			from = 10,
+			to = 11,
+			//spec = Spec::class
 		)
 	],
 	exportSchema = true,
@@ -84,10 +82,3 @@ val Migration = object : Migration(9, 10) {
 	}
 }
 
-@DeleteColumn.Entries(
-	DeleteColumn(
-		tableName = "sessions",
-		columnName = "session_date"
-	)
-)
-class Spec : AutoMigrationSpec
