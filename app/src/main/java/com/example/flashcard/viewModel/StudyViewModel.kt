@@ -13,7 +13,9 @@ import com.example.flashcard.model.entities.CardEntity
 import com.example.flashcard.model.entities.SessionEntity
 import com.example.flashcard.model.entities.calculateDueDate
 import com.example.flashcard.screens.study.CardState
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.Calendar
 import java.util.Date
 
@@ -102,9 +104,6 @@ class StudyViewModel(
 		}
 	}
 	
-	// Collection Screen(progress bar)
-	private var totalCollectionCardsCount: Long = 0
-	private var totalCollectionMasteredCardsCount: Long = 0
 	
 	// Clear Data
 	fun clearDatabase() {
@@ -116,32 +115,25 @@ class StudyViewModel(
 		}
 	}
 	
-	private fun getCollectionCardsCount(collectionId: Long): Long {
-		viewModelScope.launch {
-			totalCollectionCardsCount = cardDao.getCollectionCardsCount(collectionId)
-		}
-		return totalCollectionCardsCount
-	}
+	// Collection Screen(progress bar)
 	
-	private fun getCollectionMasteredCardsCount(collectionId: Long): Long {
-		viewModelScope.launch {
+	private suspend fun getProgress(collectionId: Long): Float {
+		val totalCollectionCardsCount: Long
+		val totalCollectionMasteredCardsCount: Long
+		
+		withContext(Dispatchers.IO) {
+			totalCollectionCardsCount = cardDao.getCollectionCardsCount(collectionId)
+			Log.d("Progress", "fetched total: $totalCollectionCardsCount")
 			totalCollectionMasteredCardsCount =
 				cardDao.getCollectionMasteredCardsCount(collectionId)
+			Log.d("Progress", "fetched mastered: $totalCollectionMasteredCardsCount")
 		}
-		return totalCollectionMasteredCardsCount
-	}
-	
-	private fun getProgress(collectionId: Long): Float {
-		var progress = 0f
-		viewModelScope.launch {
-			val masteredCardsCount = getCollectionMasteredCardsCount(collectionId)
-			val totalCardsCount = getCollectionCardsCount(collectionId)
-			Log.d("Progress", "Returned total: $totalCardsCount")
-			progress = masteredCardsCount.toFloat() / totalCardsCount
-			Log.d("Progress", "Returned P: $progress")
-		}
+		Log.d(
+			"Progress",
+			"Returned P: ${totalCollectionMasteredCardsCount.toFloat() / totalCollectionCardsCount}"
+		)
 		
-		return progress
+		return totalCollectionMasteredCardsCount.toFloat() / totalCollectionCardsCount
 	}
 	
 	fun updateProgress(collectionId: Long) {
