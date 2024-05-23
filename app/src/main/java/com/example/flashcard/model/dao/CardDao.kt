@@ -24,6 +24,11 @@ interface CardDao {
 		currentDate: Long = System.currentTimeMillis()
 	): List<CardEntity>
 	
+	@Query("SELECT * FROM cards WHERE collection_id = :collectionId")
+	suspend fun getCollectionCards(
+		collectionId: Long,
+	): List<CardEntity>
+	
 	@Query("DELETE FROM cards;")
 	suspend fun deleteAllCards()
 	

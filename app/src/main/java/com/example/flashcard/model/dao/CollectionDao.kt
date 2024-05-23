@@ -26,4 +26,7 @@ interface CollectionDao {
 	@Query("UPDATE collections SET progress = :progress WHERE id = :collectionId;")
 	suspend fun updateCollectionProgress(collectionId: Long, progress: Float)
 	
+	@Query("DELETE FROM collections WHERE id = :collectionId;")
+	suspend fun deleteCollection(collectionId: Long)
+	
 }

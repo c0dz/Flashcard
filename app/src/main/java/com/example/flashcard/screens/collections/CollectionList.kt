@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -12,9 +13,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -30,6 +36,9 @@ import com.example.flashcard.ui.theme.collectionBackgroundEnd
 import com.example.flashcard.ui.theme.collectionBackgroundStart
 import com.example.flashcard.ui.theme.homeCardBorderColor
 import com.example.flashcard.viewModel.StudyViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 @Composable
 fun CollectionList(
@@ -70,6 +79,59 @@ fun CollectionComponent(
 	viewModel: StudyViewModel,
 	progress: Float
 ) {
+	val coroutineScope = rememberCoroutineScope()
+	
+	// Dialog
+	val openAlertDialog = remember { mutableStateOf(false) }
+	when {
+		openAlertDialog.value -> {
+			AlertDialog(
+				onDismissRequest = { openAlertDialog.value = false },
+				title = {
+					Text(text = "Congratulations!")
+				},
+				text = {
+					Text(text = "You have mastered all the cards in this collection!")
+				},
+				confirmButton = {
+					Row(
+						verticalAlignment = Alignment.CenterVertically,
+						horizontalArrangement = Arrangement.End
+					) {
+						TextButton(
+							onClick = {
+								// Review the collection
+								openAlertDialog.value = false
+								coroutineScope.launch {
+									withContext(Dispatchers.IO) {
+										viewModel.setMasteredStudySession(id)
+										viewModel.sessionInfo.collectionId = id
+										viewModel.sessionInfo.startTime =
+											System.currentTimeMillis()
+									}
+									navController.navigate(Screen.CardScreen.route)
+								}
+							}
+						) {
+							Text(text = "Review")
+						}
+						TextButton(
+							onClick = {
+								// Delete the collection
+								coroutineScope.launch(Dispatchers.IO) {
+									viewModel.deleteCollection(id)
+								}
+								openAlertDialog.value = false
+							}
+						) {
+							Text(text = "Delete Collection", color = Color.Red)
+						}
+					}
+				},
+			)
+		}
+	}
+	
 	Row(
 		modifier = Modifier
 			.fillMaxSize()
@@ -86,11 +148,20 @@ fun CollectionComponent(
 			)
 			.padding(10.dp)
 			.clickable {
-				viewModel.setStudyCollection(id)
-				viewModel.sessionInfo.collectionId = id
-				viewModel.sessionInfo.startTime =
-					System.currentTimeMillis() // set session start time
-				navController.navigate(Screen.CardScreen.route)
+				coroutineScope.launch {
+					val fetchedProgress = withContext(Dispatchers.IO) { viewModel.getProgress(id) }
+					if (fetchedProgress == 1f) {
+						openAlertDialog.value = true
+					} else {
+						withContext(Dispatchers.IO) {
+							viewModel.setStudySession(id)
+							viewModel.sessionInfo.collectionId = id
+							viewModel.sessionInfo.startTime =
+								System.currentTimeMillis()
+						}
+						navController.navigate(Screen.CardScreen.route)
+					}
+				}
 			},
 		verticalAlignment = Alignment.CenterVertically,
 		horizontalArrangement = Arrangement.SpaceAround
@@ -114,12 +185,19 @@ fun CollectionComponent(
 				color = Color.White,
 				fontSize = 30.sp
 			)
-			Text(
-				text = tag,
-				modifier = Modifier.padding(5.dp),
-				color = Color.White,
-				fontSize = 15.sp
-			)
+			Box(
+				modifier = Modifier
+					.clip(shape = RoundedCornerShape(10.dp))
+					.background(Color(0xFF846BCD)),
+			) {
+				Text(
+					modifier = Modifier
+						.padding(7.dp),
+					text = tag,
+					color = Color.White,
+					fontSize = 15.sp
+				)
+			}
 		}
 	}
 }

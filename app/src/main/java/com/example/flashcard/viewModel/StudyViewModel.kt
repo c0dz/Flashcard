@@ -27,13 +27,19 @@ class StudyViewModel(
 	var cards: List<CardEntity> = emptyList()
 		private set
 	
-	fun setStudyCollection(collectionId: Long) {
-		viewModelScope.launch {
+	suspend fun setStudySession(collectionId: Long) {
+		withContext(Dispatchers.IO) {
 			cards = cardDao.getDueCards(collectionId)
 			// check if the cards list is empty
 			if (cards.isEmpty()) {
 				Log.e("StudyViewModel", "Cards List is Empty.")
 			}
+		}
+	}
+	
+	suspend fun setMasteredStudySession(collectionId: Long) {
+		withContext(Dispatchers.IO) {
+			cards = cardDao.getCollectionCards(collectionId)
 		}
 	}
 	
@@ -61,7 +67,7 @@ class StudyViewModel(
 		val dueDate = calculateDueDate(card.boxNumber + 1, lastReviewDate)
 		Log.d("CardScreen", "Due Date: $dueDate")
 		var isMasteredState = 0
-		if (card.boxNumber + 1 == 7) {
+		if (card.boxNumber + 1 >= 7) {
 			isMasteredState = 1
 		}
 		
@@ -115,9 +121,14 @@ class StudyViewModel(
 		}
 	}
 	
-	// Collection Screen(progress bar)
+	suspend fun deleteCollection(collectionId: Long) {
+		withContext(Dispatchers.IO) {
+			collectionDao.deleteCollection(collectionId)
+		}
+	}
 	
-	private suspend fun getProgress(collectionId: Long): Float {
+	// Collection Screen(progress bar)
+	suspend fun getProgress(collectionId: Long): Float {
 		val totalCollectionCardsCount: Long
 		val totalCollectionMasteredCardsCount: Long
 		
