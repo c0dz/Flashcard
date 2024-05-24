@@ -15,8 +15,11 @@ interface CardDao {
 	@Delete
 	suspend fun deleteCard(card: CardEntity)
 	
-	@Query("SELECT * FROM cards WHERE is_mastered = 0")
+	@Query("SELECT * FROM cards;")
 	suspend fun getAllCards(): List<CardEntity>
+	
+	@Query("SELECT * FROM cards WHERE is_mastered = 0")
+	suspend fun getAllDueCards(): List<CardEntity>
 	
 	@Query("SELECT * FROM cards WHERE due_date < :currentDate and collection_id = :collectionId and is_mastered = 0")
 	suspend fun getDueCards(

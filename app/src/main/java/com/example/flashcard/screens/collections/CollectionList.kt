@@ -3,7 +3,7 @@ package com.example.flashcard.screens.collections
 import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -26,6 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
@@ -81,15 +82,14 @@ fun CollectionComponent(
 ) {
 	val coroutineScope = rememberCoroutineScope()
 	
-	// Dialog
-	val openAlertDialog = remember { mutableStateOf(false) }
+	// Dialogs
+	val openAlertDialog1 = remember { mutableStateOf(false) }
+	val openAlertDialog2 = remember { mutableStateOf(false) }
+	
 	when {
-		openAlertDialog.value -> {
+		openAlertDialog1.value -> {
 			AlertDialog(
-				onDismissRequest = { openAlertDialog.value = false },
-				title = {
-					Text(text = "Congratulations!")
-				},
+				onDismissRequest = { openAlertDialog1.value = false },
 				text = {
 					Text(text = "You have mastered all the cards in this collection!")
 				},
@@ -101,7 +101,7 @@ fun CollectionComponent(
 						TextButton(
 							onClick = {
 								// Review the collection
-								openAlertDialog.value = false
+								openAlertDialog1.value = false
 								coroutineScope.launch {
 									withContext(Dispatchers.IO) {
 										viewModel.setMasteredStudySession(id)
@@ -121,13 +121,40 @@ fun CollectionComponent(
 								coroutineScope.launch(Dispatchers.IO) {
 									viewModel.deleteCollection(id)
 								}
-								openAlertDialog.value = false
+								openAlertDialog1.value = false
 							}
 						) {
 							Text(text = "Delete Collection", color = Color.Red)
 						}
 					}
 				},
+			)
+		}
+		
+		openAlertDialog2.value -> {
+			AlertDialog(
+				onDismissRequest = { openAlertDialog2.value = false },
+				title = { Text(text = "Delete Collection") },
+				text = { Text("Are you sure you want to delete this collection? This action cannot be undone.") },
+				confirmButton = {
+					TextButton(
+						onClick = {
+							openAlertDialog2.value = false
+							coroutineScope.launch(Dispatchers.IO) {
+								viewModel.deleteCollection(id)
+							}
+						}
+					) {
+						Text("Delete")
+					}
+				},
+				dismissButton = {
+					TextButton(
+						onClick = { openAlertDialog2.value = false }
+					) {
+						Text("Cancel")
+					}
+				}
 			)
 		}
 	}
@@ -147,21 +174,28 @@ fun CollectionComponent(
 				),
 			)
 			.padding(10.dp)
-			.clickable {
-				coroutineScope.launch {
-					val fetchedProgress = withContext(Dispatchers.IO) { viewModel.getProgress(id) }
-					if (fetchedProgress == 1f) {
-						openAlertDialog.value = true
-					} else {
-						withContext(Dispatchers.IO) {
-							viewModel.setStudySession(id)
-							viewModel.sessionInfo.collectionId = id
-							viewModel.sessionInfo.startTime =
-								System.currentTimeMillis()
+			.pointerInput(Unit){
+				detectTapGestures(
+					onLongPress = {
+						openAlertDialog2.value = true
+					},
+					onTap = {
+						coroutineScope.launch {
+							val fetchedProgress = withContext(Dispatchers.IO) { viewModel.getProgress(id) }
+							if (fetchedProgress == 1f) {
+								openAlertDialog1.value = true
+							} else {
+								withContext(Dispatchers.IO) {
+									viewModel.setStudySession(id)
+									viewModel.sessionInfo.collectionId = id
+									viewModel.sessionInfo.startTime =
+										System.currentTimeMillis()
+								}
+								navController.navigate(Screen.CardScreen.route)
+							}
 						}
-						navController.navigate(Screen.CardScreen.route)
 					}
-				}
+				)
 			},
 		verticalAlignment = Alignment.CenterVertically,
 		horizontalArrangement = Arrangement.SpaceAround

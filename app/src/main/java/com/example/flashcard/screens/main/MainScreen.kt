@@ -17,7 +17,7 @@ import com.example.flashcard.viewModel.StudyViewModel
 fun MainScreen(
 	navController: NavHostController,
 	cardViewModel: CardViewModel,
-	studyViewModel: StudyViewModel
+	studyViewModel: StudyViewModel,
 ) {
 	Scaffold(
 		bottomBar = { BottomBarDisplay(navController, cardViewModel) },

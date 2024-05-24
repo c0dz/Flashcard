@@ -30,7 +30,7 @@ import com.example.flashcard.viewModel.StudyViewModel
 fun Navigation(
 	navController: NavHostController,
 	cardViewModel: CardViewModel,
-	studyViewModel: StudyViewModel
+	studyViewModel: StudyViewModel,
 ) {
 	NavHost(
 		navController = navController,
@@ -91,7 +91,7 @@ fun Navigation(
 		composable(Screen.SettingsScreen.route) {
 			SettingsScreen(
 				navController,
-				studyViewModel
+				studyViewModel,
 			)
 		}
 	}

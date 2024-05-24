@@ -10,6 +10,7 @@ import com.example.flashcard.model.dao.CardDao
 import com.example.flashcard.model.dao.CollectionDao
 import com.example.flashcard.model.dao.SessionDao
 import com.example.flashcard.model.entities.CardEntity
+import com.example.flashcard.model.entities.CollectionEntity
 import com.example.flashcard.model.entities.SessionEntity
 import com.example.flashcard.model.entities.calculateDueDate
 import com.example.flashcard.screens.study.CardState
@@ -45,7 +46,7 @@ class StudyViewModel(
 	
 	fun setAllCards() {
 		viewModelScope.launch {
-			cards = cardDao.getAllCards()
+			cards = cardDao.getAllDueCards()
 		}
 	}
 	
@@ -262,5 +263,30 @@ class StudyViewModel(
 		return calendar.time == date2
 	}
 	
+	
+	// get All tables
+	suspend fun getAllCards(): List<CardEntity> {
+		val cards: List<CardEntity>
+		withContext(Dispatchers.IO) {
+			cards = cardDao.getAllCards()
+		}
+		return cards
+	}
+	
+	suspend fun getAllCollections(): List<CollectionEntity> {
+		val collections: List<CollectionEntity>
+		withContext(Dispatchers.IO) {
+			collections = collectionDao.getCollections()
+		}
+		return collections
+	}
+	
+	suspend fun getAllSessions(): List<SessionEntity> {
+		val sessions: List<SessionEntity>
+		withContext(Dispatchers.IO) {
+			sessions = sessionDao.getAllSessions()
+		}
+		return sessions
+	}
 	
 }

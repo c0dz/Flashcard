@@ -90,5 +90,7 @@ dependencies {
 	// lifecycle
 	implementation(libs.androidx.lifecycle.extensions)
 	
+	// document file
+	implementation(libs.androidx.documentfile)
 	
 }

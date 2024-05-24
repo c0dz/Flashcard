@@ -71,10 +71,12 @@ class MainActivity : ComponentActivity() {
 				MainScreen(
 					navController = navController,
 					cardViewModel = cardViewModel,
-					studyViewModel = studyViewModel
+					studyViewModel = studyViewModel,
 				)
 			}
 		}
 	}
+	
+	
 }
 
