@@ -236,7 +236,6 @@ private fun MarkCard(
 						viewModel.sessionInfo.endTime = System.currentTimeMillis()
 						viewModel.updateProgress(viewModel.sessionInfo.collectionId)
 						navController.navigate(Screen.WellDoneScreen.route)
-						viewModel.addNewSession()
 					}
 					viewModel.removeCurrentCardFromList(
 						cardsList,
@@ -273,7 +272,6 @@ private fun MarkCard(
 						viewModel.sessionInfo.endTime = System.currentTimeMillis()
 						viewModel.updateProgress(viewModel.sessionInfo.collectionId)
 						navController.navigate(Screen.WellDoneScreen.route)
-						viewModel.addNewSession()
 					}
 					viewModel.removeCurrentCardFromList(
 						cardsList,

@@ -99,7 +99,7 @@ private fun Card(
 			.fillMaxSize()
 			.height(150.dp)
 			.padding(10.dp)
-			.clip(shape = RoundedCornerShape(topEnd = 30.dp, bottomStart = 30.dp))
+			.clip(shape = RoundedCornerShape(30.dp))
 			.background(homeBackgroundColor)
 			.clickable { }
 			.padding(5.dp),

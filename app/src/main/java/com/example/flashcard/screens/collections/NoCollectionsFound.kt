@@ -18,7 +18,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -28,6 +27,7 @@ import com.example.flashcard.R
 import com.example.flashcard.Screen
 import com.example.flashcard.ui.theme.bottomTopAppBarColor
 import com.example.flashcard.ui.theme.buttonColorGreen
+import com.example.flashcard.ui.theme.robotoFont
 import com.example.flashcard.ui.theme.textColorPurple
 import com.example.flashcard.viewModel.CardViewModel
 
@@ -68,8 +68,8 @@ fun NoCollectionsFound(navController: NavHostController, viewModel: CardViewMode
 		)
 		Text(
 			text = "No collection created",
+			fontFamily = robotoFont,
 			fontWeight = FontWeight.Bold,
-			fontStyle = FontStyle.Normal,
 			color = Color.White,
 			fontSize = 22.sp
 		)
@@ -79,9 +79,9 @@ fun NoCollectionsFound(navController: NavHostController, viewModel: CardViewMode
 				.height(15.dp)
 		)
 		Text(
-			text = "Create your first collection based on any subject you want to improve your fixation",
+			text = "Build your first collection by adding questions and answers",
+			fontFamily = robotoFont,
 			fontWeight = FontWeight.Normal,
-			fontStyle = FontStyle.Normal,
 			color = textColorPurple,
 			fontSize = 18.sp,
 			textAlign = TextAlign.Center

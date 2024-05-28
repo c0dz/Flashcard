@@ -77,7 +77,8 @@ fun Navigation(
 		
 		composable(Screen.WellDoneScreen.route) {
 			WellDoneScreen(
-				navController = navController
+				navController = navController,
+				studyViewModel = studyViewModel
 			)
 		}
 		
