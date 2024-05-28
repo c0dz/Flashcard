@@ -28,6 +28,26 @@ import com.example.flashcard.ui.theme.buttonColorGreen
 import com.example.flashcard.ui.theme.textColorPurple
 import com.example.flashcard.viewModel.StudyViewModel
 
+/**
+ * A composable function that displays the review screen for the user's flashcards.
+ *
+ * This function creates a UI with a title and a button to start reviewing all flashcards.
+ * When the button is clicked, it initializes the study session and navigates to the card review screen.
+ *
+ * @param navController The [NavHostController] used for navigation between screens.
+ * @param studyViewModel The [StudyViewModel] instance containing the study data and logic.
+ *
+ * The screen consists of a column layout that contains:
+ * - A title text prompting the user to review their flashcards.
+ * - A spacer for visual separation.
+ * - A button that starts the review session by setting all cards and recording the session start time,
+ *   then navigates to the card review screen.
+ *
+ * @sample
+ * val navController = rememberNavController()
+ * val studyViewModel = StudyViewModel()
+ * ReviewScreen(navController = navController, studyViewModel = studyViewModel)
+ */
 @Composable
 fun ReviewScreen(navController: NavHostController, studyViewModel: StudyViewModel) {
 	Column(

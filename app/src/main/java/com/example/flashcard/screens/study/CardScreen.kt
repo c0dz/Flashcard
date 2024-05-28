@@ -27,6 +27,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -36,7 +37,9 @@ import com.example.flashcard.Screen
 import com.example.flashcard.model.entities.CardEntity
 import com.example.flashcard.ui.theme.bottomTopAppBarColor
 import com.example.flashcard.ui.theme.buttonColorGreen
+import com.example.flashcard.ui.theme.greenTextColor
 import com.example.flashcard.ui.theme.homeCardBorderColor
+import com.example.flashcard.ui.theme.robotoFont
 import com.example.flashcard.viewModel.StudyViewModel
 
 
@@ -86,10 +89,42 @@ fun CardScreen(
 						Column(
 							modifier = Modifier
 								.fillMaxSize(),
-							verticalArrangement = Arrangement.SpaceBetween,
+							verticalArrangement = Arrangement.Top,
 							horizontalAlignment = Alignment.CenterHorizontally
 						) {
-							Text(text = cardsList.value.first().question, color = Color.White)
+							Row(
+								modifier = Modifier
+									.fillMaxWidth(),
+								verticalAlignment = Alignment.CenterVertically,
+								horizontalArrangement = Arrangement.SpaceBetween
+							) {
+								Image(
+									painter = painterResource(R.drawable.card_dots),
+									contentDescription = "Card Dots"
+								)
+								Text(
+									text = "Q",
+									color = greenTextColor,
+									fontFamily = robotoFont,
+									fontWeight = FontWeight.Medium,
+									fontSize = 35.sp,
+									fontStyle = FontStyle.Italic
+								)
+							}
+							Column(
+								modifier = Modifier
+									.fillMaxSize(),
+								verticalArrangement = Arrangement.Center,
+								horizontalAlignment = Alignment.CenterHorizontally
+							) {
+								Text(
+									text = cardsList.value.first().question,
+									color = Color.White,
+									fontFamily = robotoFont,
+									fontWeight = FontWeight.Medium,
+									fontSize = 40.sp
+								)
+							}
 						}
 					} else if (cardState === CardState.Answer) {
 						Column(
@@ -98,7 +133,32 @@ fun CardScreen(
 							verticalArrangement = Arrangement.SpaceBetween,
 							horizontalAlignment = Alignment.CenterHorizontally
 						) {
-							Text(text = cardsList.value.first().answer, color = Color.White)
+							Row(
+								modifier = Modifier
+									.fillMaxWidth(),
+								verticalAlignment = Alignment.CenterVertically,
+								horizontalArrangement = Arrangement.SpaceBetween
+							) {
+								Image(
+									painter = painterResource(R.drawable.card_dots),
+									contentDescription = "Card Dots"
+								)
+								Text(
+									text = "A",
+									color = greenTextColor,
+									fontFamily = robotoFont,
+									fontWeight = FontWeight.Medium,
+									fontSize = 35.sp,
+									fontStyle = FontStyle.Italic
+								)
+							}
+							Text(
+								text = cardsList.value.first().answer,
+								color = Color.White,
+								fontFamily = robotoFont,
+								fontWeight = FontWeight.Medium,
+								fontSize = 40.sp
+							)
 							MarkCard(
 								cardsList = cardsList,
 								viewModel = viewModel,
@@ -106,7 +166,6 @@ fun CardScreen(
 								navController = navController
 							)
 						}
-						
 					}
 					
 				}

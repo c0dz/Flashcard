@@ -18,6 +18,17 @@ dependencyResolutionManagement {
 		mavenCentral()
 	}
 }
+plugins {
+	id("com.gradle.develocity") version "3.17.4"
+}
+develocity {
+	buildScan {
+		termsOfUseUrl = "https://gradle.com/help/legal-terms-of-use"
+		termsOfUseAgree = "yes"
+	}
+}
+
 
 rootProject.name = "Flashcard"
 include(":app")
+

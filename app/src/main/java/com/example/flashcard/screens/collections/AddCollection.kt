@@ -18,7 +18,22 @@ import androidx.compose.ui.unit.dp
 import com.example.flashcard.ui.theme.bottomTopAppBarColor
 import com.example.flashcard.viewModel.CardViewModel
 
-
+/**
+ * A composable function that provides a UI for adding a new collection.
+ *
+ * This function creates a UI for entering the details of a new collection, including the collection name, tags, and description. The user inputs are managed by the [CardViewModel].
+ *
+ * @param viewModel The [CardViewModel] instance containing the collection data and logic.
+ *
+ * The screen consists of a column layout that includes:
+ * - An [OutlinedTextField] for entering the collection name.
+ * - An [OutlinedTextField] for entering tags associated with the collection.
+ * - An [OutlinedTextField] for entering a description of the collection.
+ *
+ * @sample
+ * val cardViewModel = CardViewModel()
+ * AddCollection(viewModel = cardViewModel)
+ */
 @Composable
 fun AddCollection(viewModel: CardViewModel) {
 	Column(

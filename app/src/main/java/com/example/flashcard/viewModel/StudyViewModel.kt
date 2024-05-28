@@ -20,6 +20,16 @@ import kotlinx.coroutines.withContext
 import java.util.Calendar
 import java.util.Date
 
+/**
+ * ViewModel class responsible for managing study-related data and operations.
+ *
+ * This class handles the business logic related to studying, including managing study sessions, updating card progress,
+ * calculating study statistics, and handling database operations.
+ *
+ * @param cardDao The Data Access Object (DAO) for card entities, used for database operations related to cards.
+ * @param collectionDao The Data Access Object (DAO) for collection entities, used for database operations related to collections.
+ * @param sessionDao The Data Access Object (DAO) for session entities, used for database operations related to study sessions.
+ */
 class StudyViewModel(
 	private val cardDao: CardDao,
 	private val collectionDao: CollectionDao,

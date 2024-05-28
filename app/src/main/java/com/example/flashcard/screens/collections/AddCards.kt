@@ -38,6 +38,21 @@ import com.example.flashcard.ui.theme.cardLabelColor
 import com.example.flashcard.ui.theme.homeBackgroundColor
 import com.example.flashcard.viewModel.CardViewModel
 
+/**
+ * A composable function that provides a UI for adding multiple cards.
+ *
+ * This function displays a column layout with a list of cards and an option to add new cards. The cards are managed by the [CardViewModel].
+ *
+ * @param viewModel The [CardViewModel] instance containing the card data and logic.
+ *
+ * The screen consists of a column layout with:
+ * - A [LazyRow] displaying a list of cards using [CardItem].
+ * - An [AddCardItem] at the end of the row to add new cards.
+ *
+ * @sample
+ * val cardViewModel = CardViewModel()
+ * AddCards(viewModel = cardViewModel)
+ */
 @Composable
 fun AddCards(
 	viewModel: CardViewModel
@@ -69,6 +84,27 @@ fun AddCards(
 	}
 }
 
+/**
+ * A composable function that displays a card with editable question and answer fields.
+ *
+ * This function renders a card item with fields to edit the question and answer. Changes to these fields are propagated to the [CardViewModel].
+ *
+ * @param cardData The data for the card, including the question and answer.
+ * @param viewModel The [CardViewModel] instance that handles the logic for modifying the card's data.
+ *
+ * The card consists of:
+ * - An image at the top.
+ * - An [OutlinedTextField] for the question.
+ * - A spacer.
+ * - An [OutlinedTextField] for the answer.
+ *
+ * @sample
+ * ```kotlin
+ * val cardViewModel = CardViewModel()
+ * val cardData = CardData(id = 1, question = "What is Kotlin?", answer = "A programming language")
+ * CardItem(cardData = cardData, viewModel = cardViewModel)
+ * ```
+ */
 @Composable
 fun CardItem(
 	cardData: CardData,
@@ -141,6 +177,19 @@ fun CardItem(
 	}
 }
 
+/**
+ * A composable function that displays a box for adding a new card.
+ *
+ * This function renders a clickable box with an icon representing the action to add a new card. When clicked, it triggers the provided [onAddCardClick] callback.
+ *
+ * @param onAddCardClick The callback to be invoked when the box is clicked.
+ *
+ * The box is defined within a [Box] composable and consists of:
+ * - An image centered within the box, representing the action to add a new card.
+ *
+ * @sample
+ * AddCardItem(onAddCardClick = { /* Perform action to add a new card */ })
+ */
 @Composable
 fun AddCardItem(
 	onAddCardClick: () -> Unit,

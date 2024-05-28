@@ -31,7 +31,26 @@ import com.example.flashcard.ui.theme.buttonColorGreen
 import com.example.flashcard.ui.theme.textColorPurple
 import com.example.flashcard.viewModel.CardViewModel
 
-
+/**
+ * A composable function that displays a message indicating no collections were found and provides an option to create a new collection.
+ *
+ * This function creates a UI that shows an image, a message, and a button. When the button is clicked,
+ * it navigates to the screen where the user can add a new collection.
+ *
+ * @param navController The [NavHostController] used for navigation between screens.
+ * @param viewModel The [CardViewModel] instance used for handling card-related data and logic.
+ *
+ * The screen consists of a column layout that:
+ * - Displays an image indicating no collections are available.
+ * - Shows a bold text message stating "No collection created".
+ * - Provides additional instructions for creating a collection.
+ * - Contains a button that, when clicked, clears temporary data in the [CardViewModel] and navigates to the add collection detail screen.
+ *
+ * @sample
+ * val navController = rememberNavController()
+ * val cardViewModel = CardViewModel()
+ * NoCollectionsFound(navController = navController, viewModel = cardViewModel)
+ */
 @Composable
 fun NoCollectionsFound(navController: NavHostController, viewModel: CardViewModel) {
 	Column(

@@ -13,6 +13,17 @@ import com.example.flashcard.ui.theme.homeBackgroundColor
 import com.example.flashcard.viewModel.CardViewModel
 import com.example.flashcard.viewModel.StudyViewModel
 
+/**
+ * Composable function for the main screen of the application.
+ *
+ * This function defines the layout for the main screen, which includes a Scaffold with a top bar, bottom bar, and content area.
+ * The top bar displays navigation options based on the current destination, while the bottom bar provides additional functionality.
+ * The content area contains the main navigation flow of the application.
+ *
+ * @param navController The navigation controller used for navigating between screens.
+ * @param cardViewModel The view model responsible for managing card-related data and operations.
+ * @param studyViewModel The view model responsible for managing study-related data and operations.
+ */
 @Composable
 fun MainScreen(
 	navController: NavHostController,

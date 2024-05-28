@@ -27,6 +27,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
@@ -36,11 +37,32 @@ import com.example.flashcard.ui.theme.bottomTopAppBarColor
 import com.example.flashcard.ui.theme.collectionBackgroundEnd
 import com.example.flashcard.ui.theme.collectionBackgroundStart
 import com.example.flashcard.ui.theme.homeCardBorderColor
+import com.example.flashcard.ui.theme.robotoFont
 import com.example.flashcard.viewModel.StudyViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+/**
+ * A composable function that displays a list of collections.
+ *
+ * This function creates a UI that shows a list of collections using a [LazyColumn]. Each collection is represented by a [CollectionComponent].
+ * If the list of collections is empty, a message indicating no collections are available will be displayed.
+ *
+ * @param collections The list of [CollectionEntity] objects representing the collections.
+ * @param navController The [NavHostController] used for navigation between screens.
+ * @param studyViewModel The [StudyViewModel] instance containing the study data and logic.
+ *
+ * The screen consists of a column layout that:
+ * - Displays each collection using the [CollectionComponent].
+ *
+ * @sample
+ * val navController = rememberNavController()
+ * val cardViewModel = CardViewModel()
+ * val studyViewModel = StudyViewModel()
+ * val collections = listOf(CollectionEntity(1, "Collection 1", "tag1", 0.5f))
+ * CollectionList(navController = navController, cardViewModel = cardViewModel, studyViewModel = studyViewModel, collections = collections)
+ */
 @Composable
 fun CollectionList(
 	collections: List<CollectionEntity>,
@@ -71,6 +93,28 @@ fun CollectionList(
 	}
 }
 
+/**
+ * A composable function that represents an individual collection item in the list.
+ *
+ * This function creates a UI that shows the details of a single collection, including its title, tag, and progress.
+ * It provides interactions such as tapping to review the collection or long-pressing to delete it.
+ *
+ * @param id The ID of the collection.
+ * @param title The title of the collection.
+ * @param tag The tag associated with the collection.
+ * @param navController The [NavHostController] used for navigation between screens.
+ * @param viewModel The [StudyViewModel] instance containing the study data and logic.
+ * @param progress The progress of the collection as a float value.
+ *
+ * The component consists of:
+ * - A row layout that includes a circular progress indicator and a column with the collection's title and tag.
+ * - Dialogs for confirming review or deletion actions.
+ *
+ * @sample
+ * val navController = rememberNavController()
+ * val studyViewModel = StudyViewModel()
+ * CollectionComponent(id = 1, title = "Collection 1", tag = "tag1", navController = navController, viewModel = studyViewModel, progress = 0.5f)
+ */
 @Composable
 fun CollectionComponent(
 	id: Long,
@@ -174,14 +218,15 @@ fun CollectionComponent(
 				),
 			)
 			.padding(10.dp)
-			.pointerInput(Unit){
+			.pointerInput(Unit) {
 				detectTapGestures(
 					onLongPress = {
 						openAlertDialog2.value = true
 					},
 					onTap = {
 						coroutineScope.launch {
-							val fetchedProgress = withContext(Dispatchers.IO) { viewModel.getProgress(id) }
+							val fetchedProgress =
+								withContext(Dispatchers.IO) { viewModel.getProgress(id) }
 							if (fetchedProgress == 1f) {
 								openAlertDialog1.value = true
 							} else {
@@ -217,7 +262,9 @@ fun CollectionComponent(
 				text = title,
 				modifier = Modifier.padding(5.dp),
 				color = Color.White,
-				fontSize = 30.sp
+				fontSize = 30.sp,
+				fontFamily = robotoFont,
+				fontWeight = FontWeight.Bold
 			)
 			Box(
 				modifier = Modifier
@@ -229,7 +276,9 @@ fun CollectionComponent(
 						.padding(7.dp),
 					text = tag,
 					color = Color.White,
-					fontSize = 15.sp
+					fontSize = 15.sp,
+					fontFamily = robotoFont,
+					fontWeight = FontWeight.Normal
 				)
 			}
 		}

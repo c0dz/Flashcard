@@ -29,6 +29,15 @@ import com.example.flashcard.ui.theme.homeBackgroundColor
 import com.example.flashcard.viewModel.StudyViewModel
 
 
+/**
+ * A composable function that displays the user's study progress in a grid layout.
+ *
+ * This function retrieves various metrics such as total cards, mastered cards, success rate,
+ * streak, and time spent from the provided [StudyViewModel]. It then displays these metrics
+ * in a visually appealing grid format using a [LazyVerticalGrid].
+ *
+ * @param studyViewModel The [StudyViewModel] instance containing the studying cards logic.
+ */
 @Composable
 fun ProgressScreen(studyViewModel: StudyViewModel) {
 	val (hours, minutes, seconds) = studyViewModel.getTimeSpent()

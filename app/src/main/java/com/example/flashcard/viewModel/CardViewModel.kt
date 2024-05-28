@@ -16,6 +16,15 @@ import com.example.flashcard.model.entities.CollectionEntity
 import com.example.flashcard.model.entities.calculateDueDate
 import kotlinx.coroutines.launch
 
+/**
+ * ViewModel class responsible for managing card-related data and operations.
+ *
+ * This class handles the business logic related to managing cards, including adding, modifying, and inserting cards into the database.
+ * It also manages temporary data such as collection details and maintains a list of cards for display.
+ *
+ * @param cardDao The Data Access Object (DAO) for card entities, used for database operations related to cards.
+ * @param collectionDao The Data Access Object (DAO) for collection entities, used for database operations related to collections.
+ */
 class CardViewModel(
 	private val cardDao: CardDao,
 	private val collectionDao: CollectionDao

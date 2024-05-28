@@ -32,7 +32,28 @@ import com.example.flashcard.Screen
 import com.example.flashcard.ui.theme.bottomTopAppBarColor
 import com.example.flashcard.viewModel.CardViewModel
 
-
+/**
+ * A composable function that displays the top bar based on the current screen.
+ *
+ * This function dynamically chooses and displays the appropriate top bar based on the current screen route.
+ * It checks the current destination and selects the corresponding top bar composable function to display.
+ *
+ * @param navController The navigation controller responsible for managing navigation within the application.
+ * @param viewModel The [CardViewModel] instance used for data management.
+ *
+ * The function distinguishes between different screens and displays:
+ * - HomeTopBar for the Collections screen.
+ * - AddCollectionTopBar for the AddCardScreen and AddCollectionDetailScreen.
+ * - StudyTopBar for the CardScreen.
+ * - SettingsTopBar for the SettingsScreen.
+ * - ProgressTopBar for the ProgressScreen.
+ * - ReviewTopBar for the ReviewScreen.
+ *
+ * @sample
+ * val navController = rememberNavController()
+ * val viewModel = CardViewModel()
+ * TopBarDisplay(navController = navController, viewModel = viewModel)
+ */
 @Composable
 fun TopBarDisplay(navController: NavHostController, viewModel: CardViewModel) {
 	val addCollectionScreens = listOf(

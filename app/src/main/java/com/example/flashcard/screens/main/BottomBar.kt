@@ -49,6 +49,26 @@ val bottomNavItems = listOf(
 	),
 )
 
+/**
+ * A composable function that displays the bottom navigation bar based on the current destination in the navigation graph.
+ *
+ * This function determines the appropriate bottom navigation bar to display based on the current destination in the navigation graph.
+ * It handles navigation between different screens of the application.
+ *
+ * @param navController The navigation controller responsible for managing navigation within the application.
+ * @param viewModel The [CardViewModel] instance used for data management.
+ *
+ * The function checks the current destination and displays the corresponding bottom navigation bar:
+ * - [HomeNavigationBar] for home screens (Collections, Review, Progress).
+ * - [AddCollectionBottomBar] for the Add Collection Detail screen.
+ * - [AddCardsBottomBar] for the Add Card screen.
+ * - No bottom navigation bar for the Card screen and Settings screen.
+ *
+ * @sample
+ * val navController = rememberNavController()
+ * val viewModel = CardViewModel()
+ * BottomBarDisplay(navController = navController, viewModel = viewModel)
+ */
 @Composable
 fun BottomBarDisplay(navController: NavHostController, viewModel: CardViewModel) {
 	val homeScreens = listOf(
@@ -83,6 +103,23 @@ fun BottomBarDisplay(navController: NavHostController, viewModel: CardViewModel)
 	}
 }
 
+/**
+ * A composable function that displays the bottom navigation bar for home screens.
+ *
+ * This function renders a bottom navigation bar with icons and labels for navigating between different home screens such as Collections, Review, and Progress.
+ *
+ * @param navController The navigation controller responsible for managing navigation within the application.
+ *
+ * The bottom navigation bar consists of:
+ * - Three navigation items representing Collections, Review, and Progress screens.
+ * - Each item is clickable and triggers navigation to its corresponding screen.
+ *
+ * @sample
+ * ```kotlin
+ * val navController = rememberNavController()
+ * HomeNavigationBar(navController = navController)
+ * ```
+ */
 @Composable
 fun HomeNavigationBar(navController: NavHostController) {
 	var selectedItem by rememberSaveable {
@@ -126,6 +163,23 @@ fun HomeNavigationBar(navController: NavHostController) {
 	}
 }
 
+/**
+ * A composable function that displays the bottom bar for adding a collection.
+ *
+ * This function renders a bottom bar with a button for proceeding to the next step after adding a collection.
+ *
+ * @param navController The navigation controller responsible for managing navigation within the application.
+ * @param viewModel The [CardViewModel] instance used for data management.
+ *
+ * The bottom bar consists of:
+ * - A button labeled "Next" for proceeding to the next step.
+ * - Clicking the button triggers the insertion of the collection into the database and navigation to the Add Card screen.
+ *
+ * @sample
+ * val navController = rememberNavController()
+ * val viewModel = CardViewModel()
+ * AddCollectionBottomBar(navController = navController, viewModel = viewModel)
+ */
 @Composable
 fun AddCollectionBottomBar(navController: NavHostController, viewModel: CardViewModel) {
 	Row(
@@ -157,6 +211,23 @@ fun AddCollectionBottomBar(navController: NavHostController, viewModel: CardView
 	}
 }
 
+/**
+ * A composable function that displays the bottom bar for adding cards to a collection.
+ *
+ * This function renders a bottom bar with a button for saving the current collection after adding cards.
+ *
+ * @param navController The navigation controller responsible for managing navigation within the application.
+ * @param viewModel The [CardViewModel] instance used for data management.
+ *
+ * The bottom bar consists of:
+ * - A button labeled "Save Collection" for saving the collection to the database.
+ * - Clicking the button triggers the insertion of the cards into the database and navigation back to the Collections screen.
+ *
+ * @sample
+ * val navController = rememberNavController()
+ * val viewModel = CardViewModel()
+ * AddCardsBottomBar(navController = navController, viewModel = viewModel)
+ */
 @Composable
 fun AddCardsBottomBar(navController: NavHostController, viewModel: CardViewModel) {
 	Row(
@@ -187,64 +258,3 @@ fun AddCardsBottomBar(navController: NavHostController, viewModel: CardViewModel
 		}
 	}
 }
-
-//@Composable
-//fun StudyQuestionBottomBar(navController: NavHostController, viewModel: CardViewModel) {
-//	Row(
-//		modifier = Modifier
-//			.fillMaxWidth()
-//			.background(bottomTopAppBarColor),
-//		verticalAlignment = Alignment.CenterVertically,
-//		horizontalArrangement = Arrangement.Center
-//	) {
-//		Button(
-//			modifier = Modifier
-//				.fillMaxWidth(),
-//			onClick = {
-//			},
-//			colors = ButtonDefaults.buttonColors(
-//				buttonColorGreen,
-//				contentColor = Color.White
-//			),
-//			shape = RoundedCornerShape(20)
-//		) {
-//			Text(
-//				text = "See Answer",
-//				textAlign = TextAlign.Center,
-//				color = Color.White
-//			)
-//		}
-//	}
-//}
-//
-//@Composable
-//fun StudyAnswerBottomBar(
-//	navController: NavHostController,
-//	viewModel: CardViewModel
-//) {
-//	Row(
-//		modifier = Modifier
-//			.fillMaxWidth()
-//			.background(bottomTopAppBarColor),
-//		verticalAlignment = Alignment.CenterVertically,
-//		horizontalArrangement = Arrangement.Center
-//	) {
-//		Button(
-//			modifier = Modifier
-//				.fillMaxWidth(),
-//			onClick = {
-//			},
-//			colors = ButtonDefaults.buttonColors(
-//				buttonColorGreen,
-//				contentColor = Color.White
-//			),
-//			shape = RoundedCornerShape(20)
-//		) {
-//			Text(
-//				text = "See Question",
-//				textAlign = TextAlign.Center,
-//				color = Color.White
-//			)
-//		}
-//	}
-//}

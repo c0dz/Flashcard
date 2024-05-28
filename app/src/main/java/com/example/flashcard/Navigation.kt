@@ -25,7 +25,14 @@ import com.example.flashcard.screens.study.WellDoneScreen
 import com.example.flashcard.viewModel.CardViewModel
 import com.example.flashcard.viewModel.StudyViewModel
 
-
+/**
+ * Composable function responsible for handling navigation within the application.
+ * This function sets up the navigation graph using Jetpack Compose's NavHost.
+ *
+ * @param navController The navigation controller responsible for navigating between destinations.
+ * @param cardViewModel The ViewModel responsible for managing card-related data and operations.
+ * @param studyViewModel The ViewModel responsible for managing study-related data and operations.
+ */
 @Composable
 fun Navigation(
 	navController: NavHostController,
@@ -42,18 +49,6 @@ fun Navigation(
 		// Main Screen
 		composable(
 			Screen.CollectionsScreen.route,
-//			enterTransition = {
-//				slideIntoContainer(
-//					AnimatedContentTransitionScope.SlideDirection.Left,
-//					animationSpec = tween(100)
-//				)
-//			},
-//			exitTransition = {
-//				slideOutOfContainer(
-//					AnimatedContentTransitionScope.SlideDirection.Left,
-//					animationSpec = tween(100)
-//				)
-//			},
 		) {
 			CollectionScreen(
 				navController, cardViewModel = cardViewModel, studyViewModel = studyViewModel
@@ -101,6 +96,11 @@ object Graph {
 	const val HOME = "home_graph"
 }
 
+/**
+ * Composable function that applies an enter animation to its content.
+ *
+ * @param content The content to which the enter animation will be applied.
+ */
 @Composable
 fun EnterAnimation(content: @Composable () -> Unit) {
 	AnimatedVisibility(
