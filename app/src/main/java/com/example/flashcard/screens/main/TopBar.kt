@@ -89,6 +89,13 @@ fun TopBarDisplay(navController: NavHostController, viewModel: CardViewModel) {
 	}
 }
 
+/**
+ * HomeTopBar is a composable function that creates the top bar for the Home screen.
+ * It contains a settings icon, a title, and an add collection icon.
+ *
+ * @param navController The NavHostController used for navigation between screens.
+ * @param viewModel The CardViewModel instance used to handle data-related actions.
+ */
 @Composable
 fun HomeTopBar(navController: NavHostController, viewModel: CardViewModel) {
 	Row(
@@ -121,6 +128,13 @@ fun HomeTopBar(navController: NavHostController, viewModel: CardViewModel) {
 	}
 }
 
+/**
+ * AddCollectionTopBar is a composable function that creates the top bar for the Add Collection screen.
+ * It contains a close icon to navigate back to the Collections screen and tabs for navigating
+ * between the details and cards sections of a new collection.
+ *
+ * @param navController The NavHostController used for navigation between screens.
+ */
 @Composable
 fun AddCollectionTopBar(navController: NavHostController) {
 	val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -189,6 +203,13 @@ fun AddCollectionTopBar(navController: NavHostController) {
 	}
 }
 
+/**
+ * StudyTopBar is a composable function that creates the top bar for the Study screen.
+ * It contains a close icon to navigate back to the Collections screen.
+ *
+ * @param navController The NavHostController used for navigation between screens.
+ * @param viewModel The CardViewModel instance used to handle data-related actions.
+ */
 @Composable
 fun StudyTopBar(navController: NavHostController, viewModel: CardViewModel) {
 	Row(
@@ -207,6 +228,13 @@ fun StudyTopBar(navController: NavHostController, viewModel: CardViewModel) {
 	}
 }
 
+/**
+ * SettingsTopBar is a composable function that creates the top bar for the Settings screen.
+ * It contains a close icon to navigate back to the Collections screen and displays the title "Settings".
+ *
+ * @param navController The NavHostController used for navigation between screens.
+ * @param viewModel The CardViewModel instance used to handle data-related actions.
+ */
 @Composable
 fun SettingsTopBar(navController: NavHostController, viewModel: CardViewModel) {
 	Row(
@@ -237,6 +265,10 @@ fun SettingsTopBar(navController: NavHostController, viewModel: CardViewModel) {
 	}
 }
 
+/**
+ * ProgressTopBar is a composable function that creates the top bar for the Progress screen.
+ * It displays the title "Progress" at the center of the screen.
+ */
 @Composable
 fun ProgressTopBar() {
 	Row(
@@ -258,6 +290,10 @@ fun ProgressTopBar() {
 	}
 }
 
+/**
+ * ReviewTopBar is a composable function that creates the top bar for the Review screen.
+ * It displays the title "Review" at the center of the screen.
+ */
 @Composable
 fun ReviewTopBar() {
 	Row(

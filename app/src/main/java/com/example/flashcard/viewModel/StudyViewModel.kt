@@ -21,7 +21,7 @@ import java.util.Calendar
 import java.util.Date
 
 /**
- * ViewModel class responsible for managing study-related data and operations.
+ * StudyViewModel class responsible for managing study-related data and operations.
  *
  * This class handles the business logic related to studying, including managing study sessions, updating card progress,
  * calculating study statistics, and handling database operations.

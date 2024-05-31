@@ -349,14 +349,12 @@ fun showTimePickerDialog(
  * that can handle this intent, it starts the activity with the provided details.
  *
  * @sample
- * ```kotlin
  * createAlarm(
  *     context = applicationContext,
  *     message = "Wake up",
  *     hour = 7,
  *     minutes = 30
  * )
- * ```
  */
 fun createAlarm(context: Context, message: String, hour: Int, minutes: Int) {
 	val intent = Intent(AlarmClock.ACTION_SET_ALARM).apply {
@@ -415,7 +413,7 @@ suspend fun exportDataToCSV(
 	collectionsFile.delete()
 	sessionsFile.delete()
 	
-	return "TEST"
+	return "export_$timestamp.zip"
 }
 
 /**
