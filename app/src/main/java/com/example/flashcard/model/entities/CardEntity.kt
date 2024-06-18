@@ -1,6 +1,5 @@
 package com.example.flashcard.model.entities
 
-import android.util.Log
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
@@ -48,7 +47,6 @@ fun calculateDueDate(boxNumber: Int, lastReviewDate: Long = System.currentTimeMi
 		7 -> 60
 		else -> 90
 	}
-	Log.d("Card", "Interval: $intervalInDays")
 	
 	//return lastReviewDate + intervalInDays * 24 * 60 * 60 * 1000
 	return lastReviewDate + intervalInDays * 1

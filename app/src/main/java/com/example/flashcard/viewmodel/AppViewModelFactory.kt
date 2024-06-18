@@ -1,4 +1,4 @@
-package com.example.flashcard.viewModel
+package com.example.flashcard.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

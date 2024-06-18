@@ -1,4 +1,4 @@
-package com.example.flashcard.viewModel
+package com.example.flashcard.viewmodel
 
 import android.database.sqlite.SQLiteConstraintException
 import android.util.Log
@@ -87,7 +87,7 @@ class CardViewModel(
 	val collections = collectionDao.getAllCollections()
 	
 	// Database operations
-	private var createdCollectionID = mutableLongStateOf(0)
+	var createdCollectionID = mutableLongStateOf(0)
 	
 	fun insertCollectionToDB() {
 		val collection = CollectionEntity(

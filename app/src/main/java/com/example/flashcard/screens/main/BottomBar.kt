@@ -32,7 +32,7 @@ import com.example.flashcard.Screen
 import com.example.flashcard.data.BottomNavigationItemData
 import com.example.flashcard.ui.theme.bottomTopAppBarColor
 import com.example.flashcard.ui.theme.buttonColorGreen
-import com.example.flashcard.viewModel.CardViewModel
+import com.example.flashcard.viewmodel.CardViewModel
 
 val bottomNavItems = listOf(
 	BottomNavigationItemData(

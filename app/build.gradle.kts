@@ -54,7 +54,6 @@ android {
 		schemaDirectory("$projectDir/schemas")
 	}
 	
-	
 }
 
 dependencies {
@@ -66,8 +65,9 @@ dependencies {
 	implementation(libs.androidx.ui)
 	implementation(libs.androidx.ui.graphics)
 	implementation(libs.androidx.ui.tooling.preview)
-	implementation(libs.androidx.material3)
 	implementation(libs.androidx.ui.test.junit4.android)
+	implementation(libs.androidx.material3)
+	testImplementation(libs.junit.jupiter)
 	debugImplementation(libs.androidx.ui.tooling)
 	debugImplementation(libs.androidx.ui.test.manifest)
 	
@@ -94,10 +94,26 @@ dependencies {
 	// Needed for createComposeRule(), but not for createAndroidComposeRule<YourActivity>():
 	debugImplementation(libs.ui.test.manifest)
 	
-	// Mockk
-	testImplementation(libs.mockk)
-	
-	// androidx test library
+	// Testing
+	testImplementation(libs.mockito.core)
+	testImplementation(libs.mockito.kotlin)
+	testImplementation(libs.kotlinx.coroutines.test)
+	testImplementation(libs.junit.jupiter.api)
+	testRuntimeOnly(libs.junit.jupiter.engine)
 	testImplementation(libs.androidx.core.testing)
 	
+	
+	// Add JUnit 4 dependency
+	testImplementation(libs.junit)
+	
+	// Add AndroidX Test - for UI testing and instrumented tests
+	androidTestImplementation(libs.androidx.junit)
+	
+}
+
+tasks.withType<Test> {
+	useJUnitPlatform()
+	testLogging {
+		events("passed", "skipped", "failed")
+	}
 }

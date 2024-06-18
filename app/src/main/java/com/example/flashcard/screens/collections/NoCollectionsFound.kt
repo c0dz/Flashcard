@@ -29,7 +29,7 @@ import com.example.flashcard.ui.theme.bottomTopAppBarColor
 import com.example.flashcard.ui.theme.buttonColorGreen
 import com.example.flashcard.ui.theme.robotoFont
 import com.example.flashcard.ui.theme.textColorPurple
-import com.example.flashcard.viewModel.CardViewModel
+import com.example.flashcard.viewmodel.CardViewModel
 
 /**
  * A composable function that displays a message indicating no collections were found and provides an option to create a new collection.

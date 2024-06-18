@@ -10,8 +10,8 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import com.example.flashcard.Navigation
 import com.example.flashcard.ui.theme.homeBackgroundColor
-import com.example.flashcard.viewModel.CardViewModel
-import com.example.flashcard.viewModel.StudyViewModel
+import com.example.flashcard.viewmodel.CardViewModel
+import com.example.flashcard.viewmodel.StudyViewModel
 
 /**
  * Composable function for the main screen of the application.

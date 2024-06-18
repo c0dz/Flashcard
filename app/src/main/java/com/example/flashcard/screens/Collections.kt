@@ -9,8 +9,8 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import com.example.flashcard.screens.collections.CollectionList
 import com.example.flashcard.screens.collections.NoCollectionsFound
-import com.example.flashcard.viewModel.CardViewModel
-import com.example.flashcard.viewModel.StudyViewModel
+import com.example.flashcard.viewmodel.CardViewModel
+import com.example.flashcard.viewmodel.StudyViewModel
 
 /**
  * A composable function that displays the collection screen for the user's flashcards.

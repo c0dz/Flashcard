@@ -22,12 +22,12 @@ import com.example.flashcard.screens.collections.AddCollection
 import com.example.flashcard.screens.settings.SettingsScreen
 import com.example.flashcard.screens.study.CardScreen
 import com.example.flashcard.screens.study.WellDoneScreen
-import com.example.flashcard.viewModel.CardViewModel
-import com.example.flashcard.viewModel.StudyViewModel
+import com.example.flashcard.viewmodel.CardViewModel
+import com.example.flashcard.viewmodel.StudyViewModel
 
 /**
  * Composable function responsible for handling navigation within the application.
- * This function sets up the navigation graph using Jetpack Compose's NavHost.
+ * This function sets up the navigation graph using Jetpack Composes NavHost.
  *
  * @param navController The navigation controller responsible for navigating between destinations.
  * @param cardViewModel The ViewModel responsible for managing card-related data and operations.
@@ -41,7 +41,7 @@ fun Navigation(
 ) {
 	NavHost(
 		navController = navController,
-		route = Graph.HOME,
+		route = Screen.HomeGraph.route,
 		startDestination = Screen.CollectionsScreen.route
 	) {
 		
@@ -93,9 +93,9 @@ fun Navigation(
 	}
 }
 
-object Graph {
-	const val HOME = "home_graph"
-}
+//object Graph {
+//	const val HOME = "home_graph"
+//}
 
 /**
  * Composable function that applies an enter animation to its content.

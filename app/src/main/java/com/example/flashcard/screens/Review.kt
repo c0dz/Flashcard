@@ -26,7 +26,7 @@ import com.example.flashcard.Screen
 import com.example.flashcard.ui.theme.bottomTopAppBarColor
 import com.example.flashcard.ui.theme.buttonColorGreen
 import com.example.flashcard.ui.theme.textColorPurple
-import com.example.flashcard.viewModel.StudyViewModel
+import com.example.flashcard.viewmodel.StudyViewModel
 
 /**
  * A composable function that displays the review screen for the user's flashcards.

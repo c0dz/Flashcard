@@ -14,13 +14,11 @@ import com.example.flashcard.model.dao.CollectionDao
 import com.example.flashcard.model.dao.SessionDao
 import com.example.flashcard.model.database.CardDatabase
 import com.example.flashcard.screens.main.MainScreen
-import com.example.flashcard.viewModel.AppViewModelFactory
-import com.example.flashcard.viewModel.CardViewModel
-import com.example.flashcard.viewModel.StudyViewModel
+import com.example.flashcard.viewmodel.AppViewModelFactory
+import com.example.flashcard.viewmodel.CardViewModel
+import com.example.flashcard.viewmodel.StudyViewModel
 
 class MainActivity : ComponentActivity() {
-	
-	
 	override fun onCreate(savedInstanceState: Bundle?) {
 		val splashScreen = installSplashScreen()
 		val startTime = System.currentTimeMillis()
@@ -31,16 +29,18 @@ class MainActivity : ComponentActivity() {
 		super.onCreate(savedInstanceState)
 		setContent {
 			val navController = rememberNavController()
-			val collectionDao: CollectionDao = CardDatabase
-				.getInstance(navController.context).collectionDao
-			val cardDoa: CardDao = CardDatabase.getInstance(navController.context).cardDao
-			val sessionDao: SessionDao = CardDatabase
-				.getInstance(navController.context).sessionDao
+			
+			val cardDatabase = CardDatabase.getInstance(navController.context)
+			
+			val collectionDao: CollectionDao = cardDatabase.collectionDao
+			val cardDao: CardDao = cardDatabase.cardDao
+			val sessionDao: SessionDao = cardDatabase.sessionDao
+			
 			
 			// Injecting ViewModel dependencies
 			val cardViewModel: CardViewModel by viewModels {
 				AppViewModelFactory(
-					cardDao = cardDoa,
+					cardDao = cardDao,
 					collectionDao = collectionDao,
 					sessionDao = sessionDao
 				)
@@ -48,7 +48,7 @@ class MainActivity : ComponentActivity() {
 			
 			val studyViewModel: StudyViewModel by viewModels {
 				AppViewModelFactory(
-					cardDao = cardDoa,
+					cardDao = cardDao,
 					collectionDao = collectionDao,
 					sessionDao = sessionDao
 				)

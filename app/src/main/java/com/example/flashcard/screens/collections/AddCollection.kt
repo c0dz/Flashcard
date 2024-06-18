@@ -16,7 +16,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.flashcard.ui.theme.bottomTopAppBarColor
-import com.example.flashcard.viewModel.CardViewModel
+import com.example.flashcard.viewmodel.CardViewModel
 
 /**
  * A composable function that provides a UI for adding a new collection.

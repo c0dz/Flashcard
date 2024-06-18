@@ -41,7 +41,7 @@ import com.example.flashcard.ui.theme.buttonColorGreen
 import com.example.flashcard.ui.theme.greenTextColor
 import com.example.flashcard.ui.theme.homeCardBorderColor
 import com.example.flashcard.ui.theme.robotoFont
-import com.example.flashcard.viewModel.StudyViewModel
+import com.example.flashcard.viewmodel.StudyViewModel
 
 
 enum class CardState(val stateValue: String) {

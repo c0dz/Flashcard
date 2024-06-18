@@ -1,6 +1,8 @@
 package com.example.flashcard
 
 sealed class Screen(val route: String) {
+	data object HomeGraph : Screen("home_graph")
+	
 	// HOME SCREEN
 	data object CollectionsScreen : Screen("collections_screen")
 	data object ReviewScreen : Screen("review_screen")

@@ -38,7 +38,7 @@ import com.example.flashcard.ui.theme.collectionBackgroundEnd
 import com.example.flashcard.ui.theme.collectionBackgroundStart
 import com.example.flashcard.ui.theme.homeCardBorderColor
 import com.example.flashcard.ui.theme.robotoFont
-import com.example.flashcard.viewModel.StudyViewModel
+import com.example.flashcard.viewmodel.StudyViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext

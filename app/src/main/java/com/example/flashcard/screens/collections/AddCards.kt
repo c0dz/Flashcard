@@ -36,7 +36,7 @@ import com.example.flashcard.ui.theme.bottomTopAppBarColor
 import com.example.flashcard.ui.theme.cardBackgroundColor
 import com.example.flashcard.ui.theme.cardLabelColor
 import com.example.flashcard.ui.theme.homeBackgroundColor
-import com.example.flashcard.viewModel.CardViewModel
+import com.example.flashcard.viewmodel.CardViewModel
 
 /**
  * A composable function that provides a UI for adding multiple cards.

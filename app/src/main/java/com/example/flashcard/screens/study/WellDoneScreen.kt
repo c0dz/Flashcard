@@ -35,7 +35,7 @@ import com.example.flashcard.ui.theme.buttonColorGreen
 import com.example.flashcard.ui.theme.greenTextColor
 import com.example.flashcard.ui.theme.homeBackgroundColor
 import com.example.flashcard.ui.theme.robotoFont
-import com.example.flashcard.viewModel.StudyViewModel
+import com.example.flashcard.viewmodel.StudyViewModel
 
 
 @Composable

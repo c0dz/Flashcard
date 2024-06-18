@@ -1,6 +1,5 @@
-package com.example.flashcard.viewModel
+package com.example.flashcard.viewmodel
 
-import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -38,13 +37,10 @@ class StudyViewModel(
 	var cards: List<CardEntity> = emptyList()
 		private set
 	
+	
 	suspend fun setStudySession(collectionId: Long) {
 		withContext(Dispatchers.IO) {
 			cards = cardDao.getDueCards(collectionId)
-			// check if the cards list is empty
-			if (cards.isEmpty()) {
-				Log.e("StudyViewModel", "Cards List is Empty.")
-			}
 		}
 	}
 	
@@ -63,11 +59,11 @@ class StudyViewModel(
 	fun removeCurrentCardFromList(
 		cardsList: MutableState<List<CardEntity>>,
 		updateCardState: (CardState) -> Unit,
-		QuestionState: CardState
+		questionState: CardState
 	) {
 		val tempCardList = cardsList.value.toMutableList()
 		tempCardList.removeAt(0) // remove the current card from the list
-		updateCardState(QuestionState) // flip the card
+		updateCardState(questionState) // flip the card
 		cardsList.value = tempCardList
 	}
 	
@@ -76,7 +72,6 @@ class StudyViewModel(
 	) {
 		val lastReviewDate = System.currentTimeMillis()
 		val dueDate = calculateDueDate(card.boxNumber + 1, lastReviewDate)
-		Log.d("CardScreen", "Due Date: $dueDate")
 		var isMasteredState = 0
 		if (card.boxNumber + 1 >= 7) {
 			isMasteredState = 1
@@ -103,7 +98,6 @@ class StudyViewModel(
 	) {
 		val lastReviewDate = System.currentTimeMillis()
 		val dueDate = calculateDueDate(0, lastReviewDate)
-		Log.d("CardScreen", "Due Date: $dueDate")
 		
 		val updatedCard = CardEntity(
 			id = card.id,
@@ -128,7 +122,6 @@ class StudyViewModel(
 			cardDao.deleteAllCards()
 			collectionDao.deleteAllCollections()
 			sessionDao.deleteAllSessions()
-			Log.d("StudyViewModel", "Cleared Database.")
 		}
 	}
 	
@@ -145,15 +138,10 @@ class StudyViewModel(
 		
 		withContext(Dispatchers.IO) {
 			totalCollectionCardsCount = cardDao.getCollectionCardsCount(collectionId)
-			Log.d("Progress", "fetched total: $totalCollectionCardsCount")
 			totalCollectionMasteredCardsCount =
 				cardDao.getCollectionMasteredCardsCount(collectionId)
-			Log.d("Progress", "fetched mastered: $totalCollectionMasteredCardsCount")
 		}
-		Log.d(
-			"Progress",
-			"Returned P: ${totalCollectionMasteredCardsCount.toFloat() / totalCollectionCardsCount}"
-		)
+		
 		
 		return totalCollectionMasteredCardsCount.toFloat() / totalCollectionCardsCount
 	}
@@ -161,7 +149,6 @@ class StudyViewModel(
 	fun updateProgress(collectionId: Long) {
 		viewModelScope.launch {
 			val progress = getProgress(collectionId)
-			Log.d("Progress", "Progress Value: $progress")
 			collectionDao.updateCollectionProgress(collectionId = collectionId, progress = progress)
 		}
 	}

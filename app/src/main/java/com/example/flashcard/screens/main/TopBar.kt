@@ -30,7 +30,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.flashcard.R
 import com.example.flashcard.Screen
 import com.example.flashcard.ui.theme.bottomTopAppBarColor
-import com.example.flashcard.viewModel.CardViewModel
+import com.example.flashcard.viewmodel.CardViewModel
 
 /**
  * A composable function that displays the top bar based on the current screen.

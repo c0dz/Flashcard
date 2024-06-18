@@ -26,7 +26,7 @@ import androidx.compose.ui.unit.sp
 import com.example.flashcard.data.ProgressItem
 import com.example.flashcard.ui.theme.bottomTopAppBarColor
 import com.example.flashcard.ui.theme.homeBackgroundColor
-import com.example.flashcard.viewModel.StudyViewModel
+import com.example.flashcard.viewmodel.StudyViewModel
 
 
 /**
